@@ -5,6 +5,11 @@ export default defineConfig({
   root: 'src',
   publicDir: false,
   server: {
+    hmr: true,
+    watch: {
+      usePolling: true,
+      interval: 100
+    },
     fs: {
       allow: ['..']
     }

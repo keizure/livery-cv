@@ -190,7 +190,7 @@ body {
 
 .tech-tag {
   display: inline-block;
-  padding: 2px 8px;
+  padding: 1px 6px;
   background: transparent;
   border: 1px solid #ddd;
   border-radius: 3px;
@@ -218,19 +218,24 @@ body {
 
 .skills-grid {
   display: grid;
-  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
 }
 
 .skill-category {
+  margin-bottom: 16px;
+}
+
+.skill-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin: 0 0 8px 0;
+}
+
+.skill-content {
   font-size: 16px;
   line-height: 1.6;
-}
-
-.skill-category strong {
-  color: var(--primary-color);
-  font-weight: 600;
-}
-
-.skill-category span {
-  color: var(--text-bullet);
+  color: var(--text-color);
 }

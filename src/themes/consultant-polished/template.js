@@ -18,7 +18,7 @@ const labels = {
     databases: '数据库'
   },
   en: {
-    summary: 'Summary',
+    summary: 'Profile',
     experience: 'Experience',
     projects: 'Projects',
     education: 'Education',
@@ -122,20 +122,20 @@ export function render(data, lang = 'zh') {
       <h2 class="section-title">${t.skills}</h2>
       <div class="skills-grid">
         <div class="skill-category">
-          <strong>${t.languages}:</strong>
-          <span>${data.skills.languages.join(lang === 'zh' ? '、' : ', ')}</span>
+          <h3 class="skill-title">${t.languages}</h3>
+          <div class="skill-content">${data.skills.languages.join(lang === 'zh' ? ' • ' : ' • ')}</div>
         </div>
         <div class="skill-category">
-          <strong>${t.frameworks}:</strong>
-          <span>${data.skills.frameworks.join(lang === 'zh' ? '、' : ', ')}</span>
+          <h3 class="skill-title">${t.frameworks}</h3>
+          <div class="skill-content">${data.skills.frameworks.join(lang === 'zh' ? ' • ' : ' • ')}</div>
         </div>
         <div class="skill-category">
-          <strong>${t.tools}:</strong>
-          <span>${data.skills.tools.join(lang === 'zh' ? '、' : ', ')}</span>
+          <h3 class="skill-title">${t.tools}</h3>
+          <div class="skill-content">${data.skills.tools.join(lang === 'zh' ? ' • ' : ' • ')}</div>
         </div>
         <div class="skill-category">
-          <strong>${t.databases}:</strong>
-          <span>${data.skills.databases.join(lang === 'zh' ? '、' : ', ')}</span>
+          <h3 class="skill-title">${t.databases}</h3>
+          <div class="skill-content">${data.skills.databases.join(lang === 'zh' ? ' • ' : ' • ')}</div>
         </div>
       </div>
     </section>
