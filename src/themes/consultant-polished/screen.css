@@ -8,6 +8,7 @@
   --border-color: #e0e0e0;
   --bg-color: #ffffff;
   --bg-secondary: #f5f5f5;
+  --letter-spacing-zh: 0.04em;
 }
 
 * {
@@ -23,6 +24,20 @@ body {
   color: var(--text-color);
   background-color: var(--bg-secondary);
   padding: 40px 20px;
+}
+
+/* Chinese text spacing */
+html[lang="zh-CN"] body,
+html[lang="zh-CN"] .container * {
+  letter-spacing: var(--letter-spacing-zh);
+}
+
+/* Exclude letter-spacing for email, links, tech tags and skills */
+html[lang="zh-CN"] .contact-item,
+html[lang="zh-CN"] .contact-link,
+html[lang="zh-CN"] .tech-tag,
+html[lang="zh-CN"] .skill-content {
+  letter-spacing: normal;
 }
 
 .container {
