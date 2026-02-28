@@ -13,6 +13,23 @@ This is a multi-theme, multi-language personal resume system built with modern w
 - Real-time preview with hot module replacement
 - Chrome "Print to PDF" for perfect A4-sized output
 
+## Git Commit Convention
+
+**CRITICAL: All commits MUST follow Conventional Commits specification.**
+
+Format: `<type>[optional scope]: <description>`
+
+Common types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`
+
+Common scopes: `theme`, `i18n`, `ui`, `data`, `config`, `docs`
+
+Example: `feat(theme): add letter-spacing for Chinese text`
+
+**IMPORTANT: Always include the following at the end of commit messages:**
+```
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
+```
+
 ## Development Commands
 
 ```bash
