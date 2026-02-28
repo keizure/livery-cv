@@ -6,8 +6,7 @@
     "phone": "138-xxxx-xxxx",
     "location": "中国·深圳",
     "links": {
-      "github": "https://github.com/username",
-      "linkedin": "https://linkedin.com/in/username"
+      "github": "https://github.com/username"
     }
   },
   "summary": "这里填写个人简介，3-5 句话概括你的核心技能和优势。",
@@ -18,6 +17,7 @@
       "location": "城市",
       "startDate": "2020-01",
       "endDate": "至今",
+      "description": "在这个职位上的工作描述，简要说明主要职责和工作内容。",
       "highlights": [
         "负责核心产品的架构设计和开发",
         "带领团队完成 XX 项目，提升性能 50%",
@@ -45,6 +45,8 @@
     {
       "name": "项目名称",
       "description": "项目简短描述",
+      "startDate": "2023-01",
+      "endDate": "2023-12",
       "tech": ["React", "Node.js", "MongoDB"],
       "highlights": [
         "实现了 XX 功能，用户量达到 10w+",

@@ -41,13 +41,11 @@ export function render(data, lang = 'zh') {
         <p class="title">${data.personalInfo.title}</p>
       </div>
       <div class="contact-info">
-        <div class="contact-item">${data.personalInfo.email}</div>
-        <div class="contact-item">${data.personalInfo.phone}</div>
-        <div class="contact-item">${data.personalInfo.location}</div>
-      </div>
-      <div class="links">
-        ${data.personalInfo.links.github ? `<a href="${data.personalInfo.links.github}" target="_blank">GitHub</a>` : ''}
-        ${data.personalInfo.links.linkedin ? `<a href="${data.personalInfo.links.linkedin}" target="_blank">LinkedIn</a>` : ''}
+        <span class="contact-item">${data.personalInfo.email}</span>
+        <span class="contact-item">${data.personalInfo.phone}</span>
+        <span class="contact-item">${data.personalInfo.location}</span>
+        ${data.personalInfo.links.github ? `<a href="${data.personalInfo.links.github}" target="_blank" class="contact-link">GitHub</a>` : ''}
+        ${data.personalInfo.links.linkedin ? `<a href="${data.personalInfo.links.linkedin}" target="_blank" class="contact-link">LinkedIn</a>` : ''}
       </div>
     </header>
 
@@ -71,6 +69,7 @@ export function render(data, lang = 'zh') {
             </div>
           </div>
           <p class="company-location">${exp.company} • ${exp.location}</p>
+          ${exp.description ? `<div class="experience-description"><p>${exp.description}</p></div>` : ''}
           <ul class="highlights">
             ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
           </ul>
@@ -86,7 +85,9 @@ export function render(data, lang = 'zh') {
         <div class="project-item">
           <div class="item-header">
             <h3 class="project-name">${proj.name}</h3>
-            ${proj.link ? `<a href="${proj.link}" target="_blank" class="project-link">${t.viewProject}</a>` : ''}
+            <div class="item-meta">
+              <span class="date">${proj.startDate} - ${proj.endDate}</span>
+            </div>
           </div>
           <p class="project-description">${proj.description}</p>
           <div class="tech-stack">
@@ -109,7 +110,6 @@ export function render(data, lang = 'zh') {
             <h3 class="school">${edu.school}</h3>
             <div class="item-meta">
               <span class="date">${edu.startDate} - ${edu.endDate}</span>
-              ${edu.gpa ? `<span class="gpa">GPA: ${edu.gpa}</span>` : ''}
             </div>
           </div>
           <p class="degree">${edu.degree} · ${edu.major}</p>

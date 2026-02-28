@@ -6,8 +6,7 @@
     "phone": "138-xxxx-xxxx",
     "location": "Shenzhen, China",
     "links": {
-      "github": "https://github.com/username",
-      "linkedin": "https://linkedin.com/in/username"
+      "github": "https://github.com/username"
     }
   },
   "summary": "Experienced software engineer with expertise in full-stack development, system architecture, and team leadership.",
@@ -18,6 +17,7 @@
       "location": "City",
       "startDate": "2020-01",
       "endDate": "Present",
+      "description": "Brief description of the role, outlining main responsibilities and work content.",
       "highlights": [
         "Led architecture design and development of core products",
         "Managed team to complete XX project, improving performance by 50%",
@@ -45,6 +45,8 @@
     {
       "name": "Project Name",
       "description": "Brief project description",
+      "startDate": "2023-01",
+      "endDate": "2023-12",
       "tech": ["React", "Node.js", "MongoDB"],
       "highlights": [
         "Implemented XX features, reaching 100k+ users",

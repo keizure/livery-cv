@@ -181,3 +181,144 @@ const labels = {
 - Test both screen and print styles when modifying CSS
 - Use semantic HTML for better accessibility and PDF export
 - Keep file paths relative to support deployment to subdirectories
+
+## CRITICAL: Theme Style Requirements
+
+**When modifying or creating themes, you MUST strictly follow the original theme's design specifications. Use browser DevTools to inspect the reference design and match EXACTLY:**
+
+### Style Inspection Process
+
+1. **Open the reference theme** in browser (e.g., https://registry.jsonresume.org/thomasdavis?theme=consultant-polished)
+2. **Use DevTools to inspect** every element and record:
+   - `font-size` (exact px value, e.g., 15.2px not 16px)
+   - `font-family` (complete font stack)
+   - `font-weight` (400, 600, etc.)
+   - `color` (exact RGB/hex value)
+   - `line-height` (exact value or ratio)
+   - `padding` and `margin` (exact spacing)
+   - `border` styles (width, color, style)
+
+3. **Create a style specification document** with exact values before implementing
+
+### Example: Consultant Polished Theme Specifications
+
+**Typography (exact values from original):**
+- Name (h1): 40px, Georgia serif, 600, `#0B1F3A`, line-height: 52px
+- Title: 18px, system-ui, 400, `#555555`, line-height: 28.8px
+- Contact info: **15.2px**, system-ui, 400, `#0B1F3A` (primary color, not black!)
+- Section titles (h2): 24px, Georgia serif, 600, `#0B1F3A`, line-height: 31.2px
+- Position/Project (h3): 18px, Georgia serif, 600, `#0B1F3A`
+- Company/Location: **14.4px**, system-ui, 400, `#666666`
+- Date: **14.4px**, system-ui, 400, `#666666`
+- Summary: **17px**, system-ui, 400, `#333333`, line-height: 1.7
+- Bullet points: 16px, system-ui, 400, `#444444`, line-height: 1.6
+- Project description: 16px, system-ui, 400, `#444444`
+
+**Layout & Spacing:**
+- Header border: `2px solid #0B1F3A` (primary color, not gray)
+- Section title border: `1px solid #e0e0e0`
+- Contact info gap: 20px between items
+- Section margins: 40px bottom
+- Experience/Project item margins: 24px bottom
+
+**Color Palette:**
+```css
+:root {
+  --primary-color: #0B1F3A;    /* Deep blue for titles and borders */
+  --text-color: #1A1A1A;        /* Main text (not often used) */
+  --text-secondary: #666666;    /* Company, location, dates */
+  --text-body: #333333;         /* Summary paragraphs */
+  --text-bullet: #444444;       /* List items and descriptions */
+  --border-color: #e0e0e0;      /* Section dividers */
+}
+```
+
+### Strict Matching Rules
+
+**DO:**
+- ✅ Use exact pixel values from DevTools (15.2px, 14.4px, etc.)
+- ✅ Match exact color values (`#0B1F3A` not `#0B1F3B`)
+- ✅ Use exact font families (Georgia, system-ui stack)
+- ✅ Preserve exact spacing and padding
+- ✅ Match border widths and colors precisely
+
+**DON'T:**
+- ❌ Round values (15.2px → 15px or 16px)
+- ❌ Approximate colors (`#0B1F3A` → `#1A1A1A`)
+- ❌ Use different font families (Arial vs Georgia)
+- ❌ Guess spacing values
+- ❌ Change visual hierarchy
+
+### Verification Process
+
+After implementing styles:
+1. Open both original and your implementation side-by-side
+2. Screenshot both versions
+3. Compare element by element:
+   - Font sizes match exactly
+   - Colors match exactly
+   - Spacing matches exactly
+   - Visual hierarchy is identical
+4. Use DevTools to verify computed styles match
+
+**If any value differs by even 0.1px or one shade of color, it must be corrected.**
+
+### Common Mistakes to Avoid
+
+1. **Rounding font sizes**: 15.2px is NOT 16px, 14.4px is NOT 14px
+2. **Wrong colors**: Contact links are primary-color (#0B1F3A), not black (#1A1A1A)
+3. **Missing font families**: Section titles need Georgia serif, not system fonts
+4. **Inconsistent spacing**: Use exact gap/margin values from original
+5. **Weak visual hierarchy**: Border colors and widths matter
+
+### Data Structure Requirements
+
+**Work Experience must include:**
+```json
+{
+  "position": "Job Title",
+  "company": "Company Name",
+  "location": "City",
+  "startDate": "2020-01",
+  "endDate": "Present",
+  "description": "Brief role summary paragraph",  // REQUIRED
+  "highlights": ["Achievement 1", "Achievement 2"]
+}
+```
+
+**Projects must include:**
+```json
+{
+  "name": "Project Name",
+  "description": "Brief description",
+  "startDate": "2023-01",  // REQUIRED - show dates, not links
+  "endDate": "2023-12",
+  "tech": ["React", "Node.js"],
+  "highlights": ["Achievement 1"]
+}
+```
+
+**Education (no GPA):**
+```json
+{
+  "school": "University",
+  "degree": "Bachelor's",
+  "major": "Computer Science",
+  "startDate": "2016-09",
+  "endDate": "2020-06"
+  // NO gpa field
+}
+```
+
+### Theme Modification Workflow
+
+When asked to modify theme styles:
+
+1. **Inspect Original**: Use DevTools on reference design
+2. **Document Exact Values**: Create specification with all exact values
+3. **Implement Precisely**: Match every value exactly
+4. **Verify Side-by-Side**: Compare with original
+5. **Iterate Until Perfect**: Fix any discrepancies
+
+**Remember: "Close enough" is not acceptable. Exact pixel-perfect matching is required.**
+

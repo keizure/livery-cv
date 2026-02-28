@@ -16,7 +16,9 @@
       "mcp__chrome-devtools__take_snapshot",
       "mcp__chrome-devtools__click",
       "Bash(pkill -f \"vite\")",
-      "mcp__chrome-devtools__press_key"
+      "mcp__chrome-devtools__press_key",
+      "Bash(tree -L 3 -I 'node_modules' . 2>/dev/null || find . -maxdepth 3 -not -path './node_modules/*' -not -path './.git/*' -type f | grep -E '\\\\.\\(json|js|html|css|md\\)$' | sort)",
+      "mcp__chrome-devtools__select_page"
     ]
   }
 }
