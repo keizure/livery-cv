@@ -1,0 +1,96 @@
+/* PDF 打印样式 */
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  body {
+    background: white;
+    padding: 0;
+    margin: 0;
+  }
+
+  .container {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0;
+    padding: 15mm 20mm;
+    box-shadow: none;
+  }
+
+  /* 确保字体大小适合打印 */
+  body {
+    font-size: 10pt;
+  }
+
+  .name {
+    font-size: 24pt;
+  }
+
+  .title {
+    font-size: 14pt;
+  }
+
+  .section-title {
+    font-size: 14pt;
+  }
+
+  .company,
+  .project-name,
+  .school {
+    font-size: 12pt;
+  }
+
+  .position,
+  .degree,
+  .contact-info,
+  .highlights li,
+  .project-description,
+  .summary,
+  .skill-category {
+    font-size: 10pt;
+  }
+
+  .item-meta,
+  .links,
+  .tech-tag,
+  .project-link {
+    font-size: 9pt;
+  }
+
+  /* 分页控制 */
+  .section {
+    page-break-inside: avoid;
+  }
+
+  .experience-item,
+  .project-item,
+  .education-item {
+    page-break-inside: avoid;
+  }
+
+  /* 确保链接在打印时可见 */
+  a {
+    color: #2c3e50;
+    text-decoration: none;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #666;
+  }
+
+  /* 移除链接的 after 伪元素，保持简洁 */
+  .links a[href]::after,
+  .project-link[href]::after {
+    content: "";
+  }
+
+  /* 打印时隐藏不必要的元素 */
+  .no-print {
+    display: none !important;
+  }
+}
