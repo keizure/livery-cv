@@ -1,8 +1,27 @@
 {
-  "name": "resume",
+  "name": "livery-cv",
   "version": "1.0.0",
-  "description": "个人简历项目 - Web 维护，Chrome 导出 PDF",
+  "description": "A bilingual (EN/ZH) CV builder that transforms your data into polished templates—with skills and media (links/images) automation built in.",
   "type": "module",
+  "keywords": [
+    "resume",
+    "cv",
+    "bilingual",
+    "pdf",
+    "template",
+    "chinese",
+    "english"
+  ],
+  "author": "Keizure",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keizure/livery-cv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/keizure/livery-cv/issues"
+  },
+  "homepage": "https://github.com/keizure/livery-cv#readme",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

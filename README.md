@@ -1,89 +1,91 @@
-# 多主题多语言简历生成器
+# Livery CV
 
-支持多种视觉主题和中英双语的现代化简历系统。通过 Web 界面预览和选择，一键导出高质量 PDF。
+> A bilingual (EN/ZH) CV builder that transforms your data into polished templates—with skills and media (links/images) automation built in.
 
-## ✨ 特性
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-- 🎨 **多主题支持** - 同一份内容，多种视觉风格
-- 🌍 **中英双语** - 自动切换语言和本地化标签
-- 🔄 **内容分离** - 数据与样式完全解耦，易于维护
-- 📱 **实时预览** - 热更新，所见即所得
-- 📄 **PDF 导出** - Chrome 打印，完美 A4 尺寸
+## ✨ Features
 
-## 🚀 快速开始
+- 🎨 **Multiple Themes** - Same content, different visual styles
+- 🌍 **Bilingual Support** - Seamless EN/ZH switching with localized labels
+- 🔄 **Content-Style Separation** - JSON data completely decoupled from themes
+- 📱 **Live Preview** - Hot module replacement for instant feedback
+- 📄 **PDF Export** - Print to perfect A4-sized PDFs via browser
+- 🎚️ **Smart Switcher** - Sliding language toggle (hidden in print)
 
-### 1. 安装依赖
+## 🚀 Quick Start
+
+### 1. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 2. 启动开发服务器
+### 2. Start Dev Server
 
 ```bash
 npm run dev
 ```
 
-浏览器自动打开 `http://localhost:5173`，你会看到主题选择器界面。
+The browser will open at `http://localhost:5173` with the theme selector.
 
-### 3. 选择语言和主题
+### 3. Choose Language & Theme
 
-- 点击顶部的 **中文** 或 **English** 按钮切换语言
-- 选择喜欢的主题卡片，点击 **查看简历** 预览效果
+- Click **中文** or **English** at the top to switch languages
+- Select a theme card and click **查看简历** / **View Resume**
 
-### 4. 修改简历内容
+### 4. Edit Your Data
 
-编辑对应语言的数据文件：
-- 中文：`src/data/resume.zh.json`
-- 英文：`src/data/resume.en.json`
+Update the appropriate language file:
+- Chinese: `src/data/resume.zh.json`
+- English: `src/data/resume.en.json`
 
-保存后浏览器自动刷新显示最新内容。
+The page auto-refreshes on save thanks to Vite HMR.
 
-### 5. 导出 PDF
+### 5. Export PDF
 
-在简历预览页面：
-1. 按 `Cmd+P`（Mac）或 `Ctrl+P`（Windows）
-2. 目标打印机选择 **"另存为 PDF"**
-3. 设置：
-   - 纸张尺寸：**A4**
-   - 边距：**无**
-   - 背景图形：**勾选**
-4. 保存到本地
+On the resume preview page:
+1. Press `Cmd+P` (Mac) or `Ctrl+P` (Windows)
+2. Select **"Save as PDF"**
+3. Settings:
+   - Paper size: **A4**
+   - Margins: **None**
+   - Background graphics: **Enabled**
+4. Save to local
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
-resume/
+livery-cv/
 ├── src/
-│   ├── index.html              # 主题选择器首页
-│   ├── viewer.html             # 简历查看器
-│   ├── main.js                 # 核心加载逻辑
+│   ├── index.html              # Theme selector homepage
+│   ├── viewer.html             # Resume viewer with lang switcher
+│   ├── main.js                 # Core loading logic
 │   │
-│   ├── data/                   # 简历数据（多语言）
-│   │   ├── resume.zh.json      # 中文简历
-│   │   └── resume.en.json      # 英文简历
+│   ├── data/                   # Resume data (multi-language)
+│   │   ├── resume.zh.json      # Chinese resume
+│   │   └── resume.en.json      # English resume
 │   │
-│   └── themes/                 # 主题目录
-│       ├── themes.json         # 主题元数据
+│   └── themes/                 # Theme directory
+│       ├── themes.json         # Theme metadata
 │       │
-│       └── consultant-polished/ # 主题实现
-│           ├── template.js     # HTML 结构渲染
-│           ├── screen.css      # 屏幕样式
-│           └── print.css       # 打印样式
+│       └── consultant-polished/ # Theme implementation
+│           ├── template.js     # HTML structure renderer
+│           ├── screen.css      # Screen display styles
+│           └── print.css       # PDF print styles
 │
-├── scripts/                    # 工具脚本（未来：批量导出）
 ├── vite.config.js
 └── package.json
 ```
 
-## 🎨 如何添加新主题
+## 🎨 Adding New Themes
 
-1. 在 `src/themes/` 创建新目录，例如 `modern-minimal/`
-2. 添加三个文件：
-   - `template.js` - 导出 `render(data, lang)` 函数
-   - `screen.css` - 屏幕显示样式
-   - `print.css` - PDF 打印样式
-3. 在 `src/themes/themes.json` 注册新主题：
+1. Create a new directory in `src/themes/`, e.g., `modern-minimal/`
+2. Add three required files:
+   - `template.js` - Export a `render(data, lang)` function
+   - `screen.css` - Styles for browser display
+   - `print.css` - Styles for PDF export
+3. Register in `src/themes/themes.json`:
 
 ```json
 {
@@ -91,117 +93,133 @@ resume/
     {
       "id": "modern-minimal",
       "name": "Modern Minimal",
-      "description": "现代简约风格，适合科技行业",
+      "description": "Clean, tech-industry friendly design",
       "preview": "/previews/modern-minimal.png"
     }
   ]
 }
 ```
 
-系统会自动识别并在首页展示新主题。
+The system will auto-detect and display the new theme.
 
-## 🌍 如何添加新语言
+## 🌍 Adding New Languages
 
-1. 在 `src/data/` 创建新语言文件，例如 `resume.ja.json`（日语）
-2. 在主题的 `template.js` 中添加对应语言标签：
+1. Create a new data file in `src/data/`, e.g., `resume.ja.json` (Japanese)
+2. Add language labels to theme's `template.js`:
 
 ```javascript
 const labels = {
   zh: { summary: '个人简介', ... },
-  en: { summary: 'Summary', ... },
-  ja: { summary: '要約', ... }  // 新增
+  en: { summary: 'Profile', ... },
+  ja: { summary: '要約', ... }  // New language
 };
 ```
 
-3. 在 `src/index.html` 添加语言切换按钮
+3. Update `src/index.html` to add a language switcher button
 
-## 🛠 技术栈
+## 🛠 Tech Stack
 
-- **Vite** - 开发服务器，快速热更新
-- **Vanilla JavaScript** - 无框架依赖，纯净轻量
-- **CSS Print Media** - 原生打印样式，完美 A4 输出
-- **ES Modules** - 现代模块化，动态加载主题
+- **Vite** - Lightning-fast dev server with HMR
+- **Vanilla JavaScript** - Zero framework dependencies
+- **CSS Print Media** - Native browser printing with A4 precision
+- **ES Modules** - Modern modular architecture with dynamic imports
 
-## 📐 设计理念
+## 📐 Design Philosophy
 
-### 1. 内容与样式分离
-- 简历数据（JSON）与主题（HTML/CSS）完全解耦
-- 修改内容时，所有主题自动更新
-- 修改主题时，不影响数据完整性
+### 1. Content-Style Separation
+- Resume data (JSON) and themes (HTML/CSS) are completely decoupled
+- Updating content automatically reflects across all themes
+- Modifying themes never affects data integrity
 
-### 2. 主题独立性
-- 每个主题是独立的模块
-- 主题之间互不干扰
-- 易于开发、测试和维护
+### 2. Theme Independence
+- Each theme is a self-contained module
+- Themes don't interfere with each other
+- Easy to develop, test, and maintain
 
-### 3. 语言本地化
-- UI 标签根据语言自动切换
-- 支持不同语言的排版规则（如中文的顿号"、"和英文逗号","）
+### 3. Language Localization
+- UI labels switch automatically based on language
+- Supports language-specific formatting rules (e.g., Chinese `•` vs English `,`)
 
-## 🎯 URL 参数说明
+## 🎯 URL Parameters
 
-访问 `viewer.html` 时可以通过 URL 参数控制：
+Control the viewer via URL parameters:
 
 ```
 http://localhost:5173/viewer.html?lang=zh&theme=consultant-polished
 ```
 
-- `lang` - 语言代码（`zh`/`en`）
-- `theme` - 主题 ID（参考 `themes.json`）
+- `lang` - Language code (`zh` / `en`)
+- `theme` - Theme ID (see `themes.json`)
 
-方便分享特定语言和主题的简历链接。
+Perfect for sharing specific language/theme combinations.
 
-## 📝 数据文件格式
+## 📝 Data File Format
 
-简历数据遵循统一的 JSON 结构，中英文字段名称一致：
+Resume data follows a unified JSON structure (same field names for all languages):
 
 ```json
 {
   "personalInfo": {
-    "name": "姓名 / Name",
-    "title": "职位 / Title",
+    "name": "Your Name",
+    "title": "Your Title",
     "email": "email@example.com",
-    "phone": "138-xxxx-xxxx",
-    "location": "城市 / City",
+    "phone": "123-456-7890",
+    "location": "City, Country",
     "links": {
       "github": "https://github.com/username",
       "linkedin": "https://linkedin.com/in/username"
     }
   },
-  "summary": "个人简介 / Summary",
+  "summary": "Brief professional summary...",
   "experience": [...],
   "projects": [...],
   "education": [...],
-  "skills": {...}
+  "skills": {
+    "languages": ["JavaScript", "TypeScript"],
+    "frameworks": ["React", "Node.js"],
+    "tools": ["Git", "Docker"],
+    "databases": ["PostgreSQL", "Redis"]
+  }
 }
 ```
 
-## 🔮 路线图
+## 🔮 Roadmap
 
-- [x] Phase 1: 重构为多主题架构
-- [x] Phase 2: 支持中英双语
-- [x] Phase 3: 主题选择器界面
-- [ ] Phase 4: 批量导出 PDF（Puppeteer）
-- [ ] Phase 5: 更多主题（Modern Minimal, Classic 等）
-- [ ] Phase 6: 在线主题编辑器
+- [x] Phase 1: Multi-theme architecture refactor
+- [x] Phase 2: Bilingual support (EN/ZH)
+- [x] Phase 3: Theme selector UI with sliding language switcher
+- [ ] Phase 4: Batch PDF export via Puppeteer
+- [ ] Phase 5: Additional themes (Modern Minimal, Classic, etc.)
+- [ ] Phase 6: Online theme editor
 
-## 🎨 灵感来源
+## 🎨 Inspiration
 
-### 英文简历主题
+### English Resume Themes
 - [Consultant Polished](https://registry.jsonresume.org/thomasdavis?theme=consultant-polished)
 - [Minimalist Grid](https://registry.jsonresume.org/thomasdavis?theme=minimalist-grid)
 
-### 中文简历参考
-- 待收集优秀案例
+### Chinese Resume References
+- Open for suggestions!
 
-## 📄 许可证
+## 📄 License
 
 MIT License
 
-## 🤝 贡献
+## 🤝 Contributing
 
-欢迎提交 Issue 和 Pull Request！
+Issues and Pull Requests are welcome!
+
+## 🚀 Deployment
+
+This project uses pure web technologies with no backend required. Deploy the `dist/` directory to any static hosting service:
+
+- **Vercel** - Zero-config deployment
+- **Netlify** - Instant builds with continuous deployment
+- **GitHub Pages** - Free hosting for public repos
+- **Cloudflare Pages** - Fast global CDN
+
+Simply run `npm run build` and deploy the generated `dist/` folder.
 
 ---
 
-**提示**：这个项目使用纯 Web 技术构建，无需任何服务端支持。你可以将 `dist/` 目录部署到任何静态托管服务（Vercel、Netlify、GitHub Pages 等）。
+**Made with ❤️ for job seekers who value design and efficiency**
