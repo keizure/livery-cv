@@ -11,7 +11,12 @@
       "Bash(git add -A)",
       "Bash(git commit:*)",
       "mcp__chrome-devtools__evaluate_script",
-      "mcp__chrome-devtools__new_page"
+      "mcp__chrome-devtools__new_page",
+      "Bash(sleep 3 && curl -s http://localhost:5173/ | head -30)",
+      "mcp__chrome-devtools__take_snapshot",
+      "mcp__chrome-devtools__click",
+      "Bash(pkill -f \"vite\")",
+      "mcp__chrome-devtools__press_key"
     ]
   }
 }

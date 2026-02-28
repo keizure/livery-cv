@@ -1,0 +1,56 @@
+{
+  "personalInfo": {
+    "name": "Jinrun Liang",
+    "title": "Software Engineer",
+    "email": "example@email.com",
+    "phone": "138-xxxx-xxxx",
+    "location": "Shenzhen, China",
+    "links": {
+      "github": "https://github.com/username",
+      "linkedin": "https://linkedin.com/in/username"
+    }
+  },
+  "summary": "Experienced software engineer with expertise in full-stack development, system architecture, and team leadership.",
+  "experience": [
+    {
+      "company": "Company Name",
+      "position": "Position",
+      "location": "City",
+      "startDate": "2020-01",
+      "endDate": "Present",
+      "highlights": [
+        "Led architecture design and development of core products",
+        "Managed team to complete XX project, improving performance by 50%",
+        "Optimized system architecture, reducing costs by 30%"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "school": "University Name",
+      "degree": "Bachelor's/Master's",
+      "major": "Major",
+      "startDate": "2016-09",
+      "endDate": "2020-06",
+      "gpa": "3.8/4.0"
+    }
+  ],
+  "skills": {
+    "languages": ["JavaScript", "TypeScript", "Python", "Go"],
+    "frameworks": ["React", "Vue", "Node.js", "Express"],
+    "tools": ["Git", "Docker", "Kubernetes", "AWS"],
+    "databases": ["MySQL", "PostgreSQL", "MongoDB", "Redis"]
+  },
+  "projects": [
+    {
+      "name": "Project Name",
+      "description": "Brief project description",
+      "tech": ["React", "Node.js", "MongoDB"],
+      "highlights": [
+        "Implemented XX features, reaching 100k+ users",
+        "Optimized performance, reducing response time by 60%"
+      ],
+      "link": "https://github.com/username/project"
+    }
+  ]
+}

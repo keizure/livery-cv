@@ -1,134 +1,108 @@
-// 加载简历数据并渲染
-async function loadResume() {
+/**
+ * Resume Viewer - Main Script
+ * Loads resume data and theme dynamically based on URL parameters
+ */
+
+// Parse URL parameters
+const params = new URLSearchParams(window.location.search);
+const lang = params.get('lang') || 'zh';
+const themeId = params.get('theme') || 'consultant-polished';
+
+/**
+ * Load CSS file dynamically
+ * @param {string} href - CSS file path
+ * @param {string} media - Media query (optional)
+ */
+function loadCSS(href, media = 'all') {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = href;
+  link.media = media;
+  document.head.appendChild(link);
+  return new Promise((resolve, reject) => {
+    link.onload = resolve;
+    link.onerror = reject;
+  });
+}
+
+/**
+ * Load resume data from JSON file
+ * @param {string} language - Language code (zh/en)
+ */
+async function loadData(language) {
   try {
-    const response = await fetch('/resume.json');
+    const response = await fetch(`/data/resume.${language}.json`);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Failed to load resume data: ${response.status}`);
     }
-    const data = await response.json();
-    renderResume(data);
+    return await response.json();
   } catch (error) {
-    console.error('加载简历数据失败:', error);
-    document.getElementById('resume').innerHTML = `
-      <div style="padding: 20px; color: red;">
-        <h2>加载失败</h2>
-        <p>无法加载简历数据: ${error.message}</p>
-      </div>
-    `;
+    console.error('Error loading resume data:', error);
+    throw error;
   }
 }
 
-function renderResume(data) {
-  const container = document.getElementById('resume');
-
-  container.innerHTML = `
-    <!-- 个人信息 -->
-    <header class="header">
-      <div class="header-main">
-        <h1 class="name">${data.personalInfo.name}</h1>
-        <p class="title">${data.personalInfo.title}</p>
-      </div>
-      <div class="contact-info">
-        <div class="contact-item">${data.personalInfo.email}</div>
-        <div class="contact-item">${data.personalInfo.phone}</div>
-        <div class="contact-item">${data.personalInfo.location}</div>
-      </div>
-      <div class="links">
-        ${data.personalInfo.links.github ? `<a href="${data.personalInfo.links.github}" target="_blank">GitHub</a>` : ''}
-        ${data.personalInfo.links.linkedin ? `<a href="${data.personalInfo.links.linkedin}" target="_blank">LinkedIn</a>` : ''}
-      </div>
-    </header>
-
-    <!-- 个人简介 -->
-    ${data.summary ? `
-    <section class="section">
-      <h2 class="section-title">个人简介</h2>
-      <p class="summary">${data.summary}</p>
-    </section>
-    ` : ''}
-
-    <!-- 工作经历 -->
-    <section class="section">
-      <h2 class="section-title">工作经历</h2>
-      ${data.experience.map(exp => `
-        <div class="experience-item">
-          <div class="item-header">
-            <h3 class="position">${exp.position}</h3>
-            <div class="item-meta">
-              <span class="date">${exp.startDate} - ${exp.endDate}</span>
-            </div>
-          </div>
-          <p class="company-location">${exp.company} • ${exp.location}</p>
-          <ul class="highlights">
-            ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
-          </ul>
-        </div>
-      `).join('')}
-    </section>
-
-    <!-- 项目经历 -->
-    ${data.projects && data.projects.length > 0 ? `
-    <section class="section">
-      <h2 class="section-title">项目经历</h2>
-      ${data.projects.map(proj => `
-        <div class="project-item">
-          <div class="item-header">
-            <h3 class="project-name">${proj.name}</h3>
-            ${proj.link ? `<a href="${proj.link}" target="_blank" class="project-link">查看项目</a>` : ''}
-          </div>
-          <p class="project-description">${proj.description}</p>
-          <div class="tech-stack">
-            ${proj.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
-          </div>
-          <ul class="highlights">
-            ${proj.highlights.map(h => `<li>${h}</li>`).join('')}
-          </ul>
-        </div>
-      `).join('')}
-    </section>
-    ` : ''}
-
-    <!-- 教育背景 -->
-    <section class="section">
-      <h2 class="section-title">教育背景</h2>
-      ${data.education.map(edu => `
-        <div class="education-item">
-          <div class="item-header">
-            <h3 class="school">${edu.school}</h3>
-            <div class="item-meta">
-              <span class="date">${edu.startDate} - ${edu.endDate}</span>
-              ${edu.gpa ? `<span class="gpa">GPA: ${edu.gpa}</span>` : ''}
-            </div>
-          </div>
-          <p class="degree">${edu.degree} · ${edu.major}</p>
-        </div>
-      `).join('')}
-    </section>
-
-    <!-- 技能 -->
-    <section class="section">
-      <h2 class="section-title">专业技能</h2>
-      <div class="skills-grid">
-        <div class="skill-category">
-          <strong>编程语言：</strong>
-          <span>${data.skills.languages.join('、')}</span>
-        </div>
-        <div class="skill-category">
-          <strong>框架/库：</strong>
-          <span>${data.skills.frameworks.join('、')}</span>
-        </div>
-        <div class="skill-category">
-          <strong>工具/平台：</strong>
-          <span>${data.skills.tools.join('、')}</span>
-        </div>
-        <div class="skill-category">
-          <strong>数据库：</strong>
-          <span>${data.skills.databases.join('、')}</span>
-        </div>
-      </div>
-    </section>
-  `;
+/**
+ * Load theme template module
+ * @param {string} theme - Theme ID
+ */
+async function loadTheme(theme) {
+  try {
+    const module = await import(`./themes/${theme}/template.js`);
+    return module.render;
+  } catch (error) {
+    console.error(`Error loading theme '${theme}':`, error);
+    throw error;
+  }
 }
 
-// 页面加载时渲染简历
-loadResume();
+/**
+ * Main initialization function
+ */
+async function init() {
+  const loadingEl = document.getElementById('loading');
+  const resumeEl = document.getElementById('resume');
+
+  try {
+    // Load theme CSS files
+    await Promise.all([
+      loadCSS(`/themes/${themeId}/screen.css`),
+      loadCSS(`/themes/${themeId}/print.css`, 'print')
+    ]);
+
+    // Load resume data
+    const data = await loadData(lang);
+
+    // Load theme template
+    const render = await loadTheme(themeId);
+
+    // Render resume
+    resumeEl.innerHTML = render(data, lang);
+
+    // Hide loading indicator
+    if (loadingEl) {
+      loadingEl.style.display = 'none';
+    }
+
+    // Update page language attribute
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+  } catch (error) {
+    console.error('Initialization failed:', error);
+    resumeEl.innerHTML = `
+      <div style="padding: 40px; text-align: center; color: #d32f2f; font-family: system-ui;">
+        <h2>加载失败 / Loading Failed</h2>
+        <p style="margin-top: 16px; color: #666;">${error.message}</p>
+        <p style="margin-top: 8px; font-size: 14px; color: #999;">
+          请检查 URL 参数: lang=${lang}, theme=${themeId}
+        </p>
+      </div>
+    `;
+    if (loadingEl) {
+      loadingEl.style.display = 'none';
+    }
+  }
+}
+
+// Start initialization when DOM is ready
+init();

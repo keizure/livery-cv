@@ -1,0 +1,10 @@
+{
+  "themes": [
+    {
+      "id": "consultant-polished",
+      "name": "Consultant Polished",
+      "description": "专业咨询风格,适合传统行业",
+      "preview": "/previews/consultant-polished.png"
+    }
+  ]
+}

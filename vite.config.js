@@ -4,11 +4,6 @@ import path from 'path'
 export default defineConfig({
   root: 'src',
   publicDir: false,
-  resolve: {
-    alias: {
-      '/data': path.resolve(__dirname, 'data')
-    }
-  },
   server: {
     fs: {
       allow: ['..']
@@ -16,6 +11,12 @@ export default defineConfig({
   },
   build: {
     outDir: '../dist',
-    emptyOutDir: true
+    emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'src/index.html'),
+        viewer: path.resolve(__dirname, 'src/viewer.html')
+      }
+    }
   }
 })

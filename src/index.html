@@ -3,14 +3,260 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>个人简历</title>
-  <link rel="stylesheet" href="./styles/screen.css">
-  <link rel="stylesheet" href="./styles/print.css" media="print">
+  <title>简历主题选择器</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, system-ui, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: white;
+      text-align: center;
+      font-size: 48px;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 48px;
+    }
+
+    .language-selector {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .language-btn {
+      padding: 12px 32px;
+      border: 2px solid white;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .language-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .language-btn.active {
+      background: white;
+      color: #667eea;
+    }
+
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 32px;
+      margin-top: 32px;
+    }
+
+    .theme-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .theme-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .theme-preview {
+      width: 100%;
+      height: 240px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .theme-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .theme-info {
+      padding: 24px;
+    }
+
+    .theme-name {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .theme-description {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .view-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: #667eea;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .view-btn:hover {
+      background: #5568d3;
+    }
+
+    .loading {
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      padding: 40px;
+    }
+
+    .error {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      color: #d32f2f;
+      margin: 0 auto;
+      max-width: 600px;
+    }
+  </style>
 </head>
 <body>
-  <div id="resume" class="container">
-    <!-- 内容将通过 JavaScript 动态渲染 -->
+  <div class="container">
+    <h1>📄 简历生成器</h1>
+    <p class="subtitle">选择语言和主题,预览或导出你的简历</p>
+
+    <div class="language-selector">
+      <button class="language-btn active" data-lang="zh">中文</button>
+      <button class="language-btn" data-lang="en">English</button>
+    </div>
+
+    <div id="themes-container" class="loading">加载主题中...</div>
   </div>
-  <script type="module" src="./main.js"></script>
+
+  <script type="module">
+    let currentLang = 'zh';
+
+    // Load themes metadata
+    async function loadThemes() {
+      try {
+        const response = await fetch('/themes/themes.json');
+        if (!response.ok) {
+          throw new Error('Failed to load themes');
+        }
+        const data = await response.json();
+        return data.themes;
+      } catch (error) {
+        console.error('Error loading themes:', error);
+        throw error;
+      }
+    }
+
+    // Render theme cards
+    function renderThemes(themes) {
+      const container = document.getElementById('themes-container');
+
+      container.innerHTML = `
+        <div class="themes-grid">
+          ${themes.map(theme => `
+            <div class="theme-card" onclick="openTheme('${theme.id}')">
+              <div class="theme-preview">
+                ${theme.preview ? `<img src="${theme.preview}" alt="${theme.name}">` : '预览图'}
+              </div>
+              <div class="theme-info">
+                <h3 class="theme-name">${theme.name}</h3>
+                <p class="theme-description">${theme.description}</p>
+                <a href="viewer.html?lang=${currentLang}&theme=${theme.id}"
+                   class="view-btn"
+                   onclick="event.stopPropagation()">
+                  查看简历
+                </a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // Open theme in viewer
+    window.openTheme = function(themeId) {
+      window.location.href = `viewer.html?lang=${currentLang}&theme=${themeId}`;
+    };
+
+    // Language selector
+    document.querySelectorAll('.language-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Update active state
+        document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        // Update current language
+        currentLang = this.dataset.lang;
+
+        // Update all view buttons
+        document.querySelectorAll('.view-btn').forEach(link => {
+          const url = new URL(link.href);
+          url.searchParams.set('lang', currentLang);
+          link.href = url.toString();
+        });
+      });
+    });
+
+    // Initialize
+    async function init() {
+      try {
+        const themes = await loadThemes();
+        renderThemes(themes);
+      } catch (error) {
+        const container = document.getElementById('themes-container');
+        container.innerHTML = `
+          <div class="error">
+            <h2>加载失败</h2>
+            <p style="margin-top: 16px;">${error.message}</p>
+          </div>
+        `;
+      }
+    }
+
+    init();
+  </script>
 </body>
 </html>
