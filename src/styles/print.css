@@ -1,4 +1,4 @@
-/* PDF 打印样式 */
+/* PDF 打印样式 - Consultant Polished */
 
 @page {
   size: A4;
@@ -16,21 +16,26 @@
     width: 210mm;
     min-height: 297mm;
     margin: 0;
-    padding: 15mm 20mm;
+    padding: 20mm 25mm;
     box-shadow: none;
   }
 
   /* 确保字体大小适合打印 */
   body {
-    font-size: 10pt;
+    font-size: 11pt;
+    line-height: 1.5;
   }
 
   .name {
-    font-size: 24pt;
+    font-size: 28pt;
   }
 
   .title {
-    font-size: 14pt;
+    font-size: 13pt;
+  }
+
+  .contact-info {
+    font-size: 10pt;
   }
 
   .section-title {
@@ -40,12 +45,18 @@
   .company,
   .project-name,
   .school {
-    font-size: 12pt;
+    font-size: 13pt;
   }
 
   .position,
-  .degree,
-  .contact-info,
+  .degree {
+    font-size: 10pt;
+  }
+
+  .item-meta {
+    font-size: 10pt;
+  }
+
   .highlights li,
   .project-description,
   .summary,
@@ -53,9 +64,14 @@
     font-size: 10pt;
   }
 
-  .item-meta,
-  .links,
-  .tech-tag,
+  .links {
+    font-size: 10pt;
+  }
+
+  .tech-tag {
+    font-size: 9pt;
+  }
+
   .project-link {
     font-size: 9pt;
   }
@@ -73,20 +89,8 @@
 
   /* 确保链接在打印时可见 */
   a {
-    color: #2c3e50;
+    color: #1A1A1A;
     text-decoration: none;
-  }
-
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-size: 8pt;
-    color: #666;
-  }
-
-  /* 移除链接的 after 伪元素，保持简洁 */
-  .links a[href]::after,
-  .project-link[href]::after {
-    content: "";
   }
 
   /* 打印时隐藏不必要的元素 */

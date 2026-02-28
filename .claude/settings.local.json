@@ -9,7 +9,9 @@
       "mcp__chrome-devtools__get_network_request",
       "mcp__chrome-devtools__take_screenshot",
       "Bash(git add -A)",
-      "Bash(git commit -m \"$\\(cat <<'EOF'\nInitial resume project setup\n\n- Setup Vite development environment\n- Create resume structure with JSON data and dynamic rendering\n- Add screen and print CSS for A4 PDF export\n- Include project documentation \\(README, CLAUDE.md, SOLUTIONS.md\\)\n\nCo-Authored-By: Claude Opus 4.6 \\(1M context\\) <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git commit -m \"$\\(cat <<'EOF'\nInitial resume project setup\n\n- Setup Vite development environment\n- Create resume structure with JSON data and dynamic rendering\n- Add screen and print CSS for A4 PDF export\n- Include project documentation \\(README, CLAUDE.md, SOLUTIONS.md\\)\n\nCo-Authored-By: Claude Opus 4.6 \\(1M context\\) <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<'EOF'\nRemove redundant data directory and clean up documentation\n\n- Delete data/resume.json \\(redundant with src/resume.json\\)\n- Update README.md and CLAUDE.md to reflect simplified structure\n- Remove all references to backup files\n\nCo-Authored-By: Claude Opus 4.6 \\(1M context\\) <noreply@anthropic.com>\nEOF\n\\)\")",
+      "mcp__chrome-devtools__evaluate_script"
     ]
   }
 }
