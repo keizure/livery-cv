@@ -53,15 +53,12 @@ function renderResume(data) {
       ${data.experience.map(exp => `
         <div class="experience-item">
           <div class="item-header">
-            <div>
-              <h3 class="company">${exp.company}</h3>
-              <p class="position">${exp.position}</p>
-            </div>
+            <h3 class="position">${exp.position}</h3>
             <div class="item-meta">
-              <span class="location">${exp.location}</span>
               <span class="date">${exp.startDate} - ${exp.endDate}</span>
             </div>
           </div>
+          <p class="company-location">${exp.company} • ${exp.location}</p>
           <ul class="highlights">
             ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
           </ul>
@@ -97,15 +94,13 @@ function renderResume(data) {
       ${data.education.map(edu => `
         <div class="education-item">
           <div class="item-header">
-            <div>
-              <h3 class="school">${edu.school}</h3>
-              <p class="degree">${edu.degree} · ${edu.major}</p>
-            </div>
+            <h3 class="school">${edu.school}</h3>
             <div class="item-meta">
               <span class="date">${edu.startDate} - ${edu.endDate}</span>
               ${edu.gpa ? `<span class="gpa">GPA: ${edu.gpa}</span>` : ''}
             </div>
           </div>
+          <p class="degree">${edu.degree} · ${edu.major}</p>
         </div>
       `).join('')}
     </section>

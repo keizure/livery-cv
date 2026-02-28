@@ -13,10 +13,11 @@
   }
 
   .container {
+    max-width: 100%;
     width: 210mm;
     min-height: 297mm;
     margin: 0;
-    padding: 20mm 25mm;
+    padding: 15mm 12mm;
     box-shadow: none;
   }
 
@@ -27,7 +28,8 @@
   }
 
   .name {
-    font-size: 28pt;
+    font-size: 26pt;
+    line-height: 1.3;
   }
 
   .title {
@@ -39,29 +41,29 @@
   }
 
   .section-title {
-    font-size: 14pt;
+    font-size: 16pt;
   }
 
-  .company,
+  .position,
   .project-name,
   .school {
     font-size: 13pt;
   }
 
-  .position,
+  .company-location,
   .degree {
-    font-size: 10pt;
+    font-size: 11pt;
   }
 
   .item-meta {
-    font-size: 10pt;
+    font-size: 11pt;
   }
 
   .highlights li,
   .project-description,
   .summary,
   .skill-category {
-    font-size: 10pt;
+    font-size: 11pt;
   }
 
   .links {
@@ -73,7 +75,7 @@
   }
 
   .project-link {
-    font-size: 9pt;
+    font-size: 10pt;
   }
 
   /* 分页控制 */
