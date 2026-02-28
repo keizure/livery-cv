@@ -18,11 +18,128 @@
       font-family: system-ui, -apple-system, sans-serif;
       color: #666;
     }
+
+    /* Language switcher - screen only */
+    .lang-switcher {
+      position: fixed;
+      top: 20px;
+      right: -56px;
+      z-index: 1000;
+      background: white;
+      padding: 6px;
+      border-radius: 20px 0 0 20px;
+      box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease;
+    }
+
+    .lang-switcher:hover {
+      right: 0;
+    }
+
+    .lang-switch {
+      position: relative;
+      width: 70px;
+      height: 32px;
+      background: #e0e0e0;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+      border: none;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .lang-switch::before {
+      content: '';
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: white;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .lang-switch.en::before {
+      transform: translateX(38px);
+    }
+
+    .lang-switch-label {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      font-weight: 500;
+      color: #666;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      line-height: 1;
+    }
+
+    .lang-switch-label.zh {
+      left: 9px;
+    }
+
+    .lang-switch-label.en {
+      right: 6px;
+    }
+
+    .lang-switch.zh .lang-switch-label.zh {
+      opacity: 1;
+      color: #0B1F3A;
+    }
+
+    .lang-switch.zh .lang-switch-label.en {
+      opacity: 0.3;
+    }
+
+    .lang-switch.en .lang-switch-label.zh {
+      opacity: 0.3;
+    }
+
+    .lang-switch.en .lang-switch-label.en {
+      opacity: 1;
+      color: #0B1F3A;
+    }
+
+    /* Hide switcher when printing */
+    @media print {
+      .lang-switcher {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Language Switcher -->
+  <div class="lang-switcher">
+    <button id="lang-toggle" class="lang-switch" onclick="toggleLanguage()">
+      <span class="lang-switch-label zh">中</span>
+      <span class="lang-switch-label en">EN</span>
+    </button>
+  </div>
+
   <div id="loading" class="loading">加载中...</div>
   <div class="container" id="resume"></div>
+
+  <script>
+    function toggleLanguage() {
+      const params = new URLSearchParams(window.location.search);
+      const currentLang = params.get('lang') || 'zh';
+      const newLang = currentLang === 'zh' ? 'en' : 'zh';
+      params.set('lang', newLang);
+      window.location.search = params.toString();
+    }
+
+    // Set switch state based on current language
+    const params = new URLSearchParams(window.location.search);
+    const currentLang = params.get('lang') || 'zh';
+    document.getElementById('lang-toggle').classList.add(currentLang);
+  </script>
+
   <script type="module" src="/main.js"></script>
 </body>
 </html>
