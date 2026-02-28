@@ -17,16 +17,9 @@ This is a multi-theme, multi-language personal resume system built with modern w
 
 **CRITICAL: All commits MUST follow Conventional Commits specification.**
 
-Format: `<type>[optional scope]: <description>`
-
-Common types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`
-
-Common scopes: `theme`, `i18n`, `ui`, `data`, `config`, `docs`
-
-Example: `feat(theme): add letter-spacing for Chinese text`
-
-**IMPORTANT: Always include the following at the end of commit messages:**
+**DO NOT: include the following at the end of commit messages:**
 ```
+power-by: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 ```
 
