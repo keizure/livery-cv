@@ -25,7 +25,6 @@ npm run preview      # Preview production build
 
 ```
 resume/
-├── data/resume.json              # Resume content backup
 ├── src/
 │   ├── index.html                # HTML template
 │   ├── resume.json               # Resume content (EDIT THIS for content changes)
@@ -33,6 +32,8 @@ resume/
 │   └── styles/
 │       ├── screen.css            # Screen display styles
 │       └── print.css             # PDF print styles (@page A4 rules)
+├── vite.config.js                # Vite configuration
+└── package.json
 ```
 
 **Content Flow:**
@@ -73,8 +74,6 @@ To update resume content, edit `src/resume.json`:
 - `projects[]`: Project portfolio
 - `education[]`: Education background
 - `skills`: Categorized skill lists
-
-**Note**: `data/resume.json` is a backup. The actual file used is `src/resume.json`.
 
 ## Modifying Styles
 

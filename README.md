@@ -22,8 +22,6 @@ npm run dev
 
 编辑 `src/resume.json` 文件，保存后浏览器会自动刷新显示最新内容。
 
-**注意**：`data/resume.json` 是备份文件，实际使用的是 `src/resume.json`。
-
 ### 4. 修改样式
 
 - **屏幕显示样式**：编辑 `src/styles/screen.css`
@@ -43,11 +41,9 @@ npm run dev
 
 ```
 resume/
-├── data/
-│   └── resume.json          # 简历数据备份
 ├── src/
 │   ├── index.html           # HTML 模板
-│   ├── resume.json          # 简历数据（实际使用）
+│   ├── resume.json          # 简历数据
 │   ├── main.js              # 渲染逻辑
 │   └── styles/
 │       ├── screen.css       # 屏幕显示样式
