@@ -30,10 +30,12 @@
       overflow-y: auto;
     }
 
-    /* Brand in sidebar — inherits .brand / .brand-cv from shared.css */
+    /* Brand — centered, larger than shared default */
     .sidebar-brand {
-      font-size: 22px;
-      margin-bottom: 28px;
+      font-size: 30px;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
       opacity: 0.9;
       transition: opacity 0.18s;
     }
@@ -69,30 +71,46 @@
     /* Spacer pushes footer to bottom */
     .sidebar-spacer { flex: 1; }
 
-    /* Print button */
-    .sidebar-print-btn {
+    /* Export button */
+    .sidebar-export-btn {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 9px;
       width: 100%;
-      padding: 8px 12px;
+      padding: 10px 12px;
       background: transparent;
       border: 1px solid var(--border);
       border-radius: 7px;
-      color: var(--muted);
+      color: rgba(238, 238, 242, 0.65);
       font-family: 'Outfit', sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.05em;
       cursor: pointer;
       transition: border-color 0.18s, color 0.18s;
+      text-align: left;
     }
-    .sidebar-print-btn:hover {
+    .sidebar-export-btn:hover {
       border-color: var(--accent-dim);
       color: var(--accent);
     }
-    .sidebar-print-btn svg {
+    .sidebar-export-btn svg {
       flex-shrink: 0;
       opacity: 0.7;
+    }
+    .export-btn-text {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .export-btn-label {
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+    .export-btn-pages {
+      font-size: 10px;
+      color: rgba(238, 238, 242, 0.38);
+      letter-spacing: 0.04em;
+      line-height: 1;
     }
 
     /* Resume fade transition */
@@ -138,12 +156,15 @@
 
     <div class="sidebar-spacer"></div>
 
-    <button class="sidebar-print-btn" onclick="window.print()">
+    <button class="sidebar-export-btn" onclick="window.print()">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
         <rect x="6" y="14" width="12" height="8"/>
       </svg>
-      打印 / 导出 PDF
+      <span class="export-btn-text">
+        <span class="export-btn-label">导出 PDF</span>
+        <span class="export-btn-pages" id="page-count">计算中…</span>
+      </span>
     </button>
   </aside>
 
@@ -179,6 +200,18 @@
       s.textContent = 'body { padding: 20px !important; }';
       document.head.appendChild(s);
     }
+
+    // Estimate PDF page count after each render
+    // A4 content height: (297 - 15*2) mm × (96px/25.4mm) ≈ 1009px
+    const A4_CONTENT_PX = Math.round((297 - 30) / 25.4 * 96);
+    function updatePageCount() {
+      const resumeEl = document.getElementById('resume');
+      const el = document.getElementById('page-count');
+      if (!resumeEl || !el) return;
+      const pages = Math.max(1, Math.ceil(resumeEl.scrollHeight / A4_CONTENT_PX));
+      el.textContent = `≈ ${pages} 页 A4`;
+    }
+    window._liveryOnRender = updatePageCount;
 
     // Load versions and populate sidebar
     fetch('/data/versions.json')

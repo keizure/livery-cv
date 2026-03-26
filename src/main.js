@@ -59,6 +59,9 @@ function applyRender(data, newLang, newVersion) {
   const versionLabel = versionEntry ? versionEntry.label : newVersion;
   const langLabel = newLang === 'zh' ? '中文' : 'English';
   document.title = [name, versionLabel, langLabel].filter(Boolean).join('-');
+
+  // Notify viewer shell (e.g. to update page count estimate)
+  window._liveryOnRender?.();
 }
 
 async function rerenderResume(newLang, newVersion) {
