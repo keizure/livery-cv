@@ -89,6 +89,7 @@ export function render(data, lang = 'zh') {
               <span class="date">${proj.startDate} - ${proj.endDate}</span>
             </div>
           </div>
+          ${proj.role ? `<p class="company-location">${proj.role}</p>` : ''}
           <p class="project-description">${proj.description}</p>
           <div class="tech-stack">
             ${proj.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
