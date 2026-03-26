@@ -1,12 +1,12 @@
 {
   "personalInfo": {
     "name": "Jinrun Liang",
-    "title": "Software Engineer",
-    "email": "example@email.com",
-    "phone": "138-xxxx-xxxx",
-    "location": "Shenzhen, China",
+    "title": "Full-stack Engineer",
+    "email": "leungjinrun@gmail.com",
+    "phone": "150-9158-7159",
+    "location": "Beijing, China",
     "links": {
-      "github": "https://github.com/username"
+      "github": "https://github.com/keizure"
     }
   },
   "summary": "Experienced software engineer with expertise in full-stack development, system architecture, and team leadership.",
@@ -25,6 +25,25 @@
       ]
     }
   ],
+  "projects": [
+    {
+      "name": "Project Name",
+      "role": "Leader",
+      "description": "Brief project description",
+      "startDate": "2023-01",
+      "endDate": "2023-12",
+      "tech": [
+        "React",
+        "Node.js",
+        "MongoDB"
+      ],
+      "highlights": [
+        "Implemented XX features, reaching 100k+ users",
+        "Optimized performance, reducing response time by 60%"
+      ],
+      "link": "https://github.com/username/project"
+    }
+  ],
   "education": [
     {
       "school": "University Name",
@@ -36,23 +55,28 @@
     }
   ],
   "skills": {
-    "languages": ["JavaScript", "TypeScript", "Python", "Go"],
-    "frameworks": ["React", "Vue", "Node.js", "Express"],
-    "tools": ["Git", "Docker", "Kubernetes", "AWS"],
-    "databases": ["MySQL", "PostgreSQL", "MongoDB", "Redis"]
-  },
-  "projects": [
-    {
-      "name": "Project Name",
-      "description": "Brief project description",
-      "startDate": "2023-01",
-      "endDate": "2023-12",
-      "tech": ["React", "Node.js", "MongoDB"],
-      "highlights": [
-        "Implemented XX features, reaching 100k+ users",
-        "Optimized performance, reducing response time by 60%"
-      ],
-      "link": "https://github.com/username/project"
-    }
-  ]
+    "languages": [
+      "JavaScript",
+      "TypeScript",
+      "Python"
+    ],
+    "frameworks": [
+      "Vue",
+      "React",
+      "Node.js",
+      "Django",
+      "Frappe"
+    ],
+    "tools": [
+      "Docker",
+      "Vim",
+      "Nginx",
+      "Tmux"
+    ],
+    "databases": [
+      "MySQL",
+      "PostgreSQL",
+      "Redis"
+    ]
+  }
 }

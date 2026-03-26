@@ -1,138 +1,57 @@
 {
   "personalInfo": {
-    "name": "梁锦润",
-    "title": "全栈工程师",
+    "name": "Jinrun Liang",
+    "title": "Full-stack Engineer",
     "email": "leungjinrun@gmail.com",
     "phone": "150-9158-7159",
-    "location": "中国·北京",
+    "location": "Beijing, China",
     "links": {
       "github": "https://github.com/keizure"
     }
   },
-  "summary": "具备 9 年以上前端 / 全栈开发经验，长期负责复杂业务系统、内部平台与商业系统建设，具备从需求抽象、技术方案设计到核心功能落地的完整经验。熟悉前后端工程化、平台型产品研发及服务端能力建设，并持续将 AI coding agent 引入真实研发流程。熟练使用 Claude Code、Codex 等工具，具备基于自定义 skills、OpenSpec、Superpower 构建个人提效工作流的实践经验，已在国际化自动化、质量评审与工程工具化场景完成落地。",
+  "summary": "Experienced software engineer with expertise in full-stack development, system architecture, and team leadership.",
   "experience": [
     {
-      "company": "北京车和家汽车科技有限公司",
-      "position": "全栈工程师",
-      "location": "北京",
-      "startDate": "2023-04",
-      "endDate": "至今",
-      "description": "负责内部数据平台及【连山】商业平台的技术方案设计、核心系统建设与交付推进。",
-      "highlights": [
-        "主导内部数据平台重构，基于 Vue3 + Django 重建前后端体系，并落地 RBAC 细粒度权限模型。",
-        "负责统一消息推送能力建设，支撑多个核心业务场景接入与平台化管理，日均消息发送量 3 万+。",
-        "负责多租户商业系统的技术选型、框架适配与业务端/运营端应用建设，支撑平台化运营场景落地。",
-        "承担团队任务拆解、项目推进、技术选型与核心模块兜底工作，辅导 3 名校招生完成业务融入与能力成长。"
-      ]
-    },
-    {
-      "company": "阿里巴巴｜高德地图",
-      "position": "前端工程师",
-      "location": "北京",
-      "startDate": "2021-11",
-      "endDate": "2023-03",
-      "description": "参与高德打车核心业务的跨端研发，负责支付、问题反馈等模块开发，并推动团队工程规范与工具建设。",
-      "highlights": [
-        "参与高德打车核心业务链路开发，支撑复杂业务场景下的稳定交付与线上体验保障。",
-        "推动代码规范、文档体系和文档网站建设，提升团队协作效率与知识沉淀质量。"
-      ]
-    },
-    {
-      "company": "北京猿力未来科技有限公司",
-      "position": "前端工程师",
-      "location": "北京",
+      "company": "Company Name",
+      "position": "Position",
+      "location": "City",
       "startDate": "2020-01",
-      "endDate": "2021-10",
-      "description": "参与数据库管理平台 DBPaaS 的建设与迭代，负责核心功能开发及工程化流程优化。",
+      "endDate": "Present",
+      "description": "Brief description of the role, outlining main responsibilities and work content.",
       "highlights": [
-        "基于 Vue3 + Django 参与 DBPaaS 平台建设，支撑数据库管理与平台化运维场景。",
-        "推动代码风格统一和 CI/CD 流程规范化，提升研发协作一致性与交付效率。"
-      ]
-    },
-    {
-      "company": "北京大米科技有限公司",
-      "position": "前端工程师",
-      "location": "北京",
-      "startDate": "2018-05",
-      "endDate": "2019-11",
-      "description": "基于 Vue2 与 WebView 混合开发模式参与 VIPKid 用户侧业务迭代与遗留模块重构。",
-      "highlights": [
-        "参与用户端遗留业务重构，提升老平台前端实现的可维护性与迭代效率。",
-        "优化工程化工具链与开发流程，提升团队开发效率。"
+        "Led architecture design and development of core products",
+        "Managed team to complete XX project, improving performance by 50%",
+        "Optimized system architecture, reducing costs by 30%"
       ]
     }
   ],
   "projects": [
     {
-      "name": "基于 LangGraph 的国际化 Agent 自动化工作流",
-      "role": "项目负责人",
-      "description": "面向存量项目国际化改造，设计并实现基于 LangGraph 的 Agent 工作流，解决 gettext 标注缺失、提取不准、术语不统一等问题，已在 13 个仓库落地，累计处理 8000+ 翻译条目。",
-      "startDate": "2025-12",
-      "endDate": "至今",
+      "name": "Project Name",
+      "role": "Leader",
+      "description": "Brief project description",
+      "startDate": "2023-01",
+      "endDate": "2023-12",
       "tech": [
-        "Python",
-        "LangGraph",
-        "LLM",
-        "Prompt Engineering",
-        "Claude Code",
-        "gettext"
+        "React",
+        "Node.js",
+        "MongoDB"
       ],
       "highlights": [
-        "设计统一提示词规范，批量完成前后端历史代码的 gettext 标注补全，降低存量代码国际化改造成本。",
-        "基于 LangGraph 编排翻译与评审 Agent，对 .pot 文件分批翻译，并注入术语库与翻译规范，提升跨模块一致性。",
-        "实现翻译结果评分与低分自动重试机制，从准确性、可读性、一致性等维度控制输出质量。",
-        "方案已支撑 13 个仓库、8000+ 翻译条目的国际化工作流，降低人工翻译与校对投入，提升多应用并行交付效率。",
-        "识别文件级翻译缺乏代码上下文的问题，正在探索基于 Claude Code Plugin + Playwright 的生成、评审、验证闭环。"
-      ]
-    },
-    {
-      "name": "iPush 消息推送平台",
-      "role": "项目负责人",
-      "description": "面向部门多业务场景的统一消息推送平台，解决原有模板管理混乱、接入流程冗长的问题，负责从 0 到 1 的技术方案设计、核心能力建设与业务接入落地。",
-      "startDate": "2024-06",
-      "endDate": "至今",
-      "tech": [
-        "Django",
-        "Faust",
-        "Kafka",
-        "Redis"
+        "Implemented XX features, reaching 100k+ users",
+        "Optimized performance, reducing response time by 60%"
       ],
-      "highlights": [
-        "基于 Jinja 对飞书卡片模板进行抽象封装，统一消息模板管理方式，并将推送能力沉淀为 Python 包，降低业务侧接入与开发成本。",
-        "设计并实现消息发送链路，支持卡片交互回调、限流、限频、熔断及多渠道推送能力，提升系统稳定性与扩展性。",
-        "支撑部门多个核心业务场景接入，日均消息发送量达 3 万+，实现统一消息发送与平台化管理。",
-        "承担项目任务拆解、技术方案评审与核心问题兜底，保障项目按计划推进和落地。"
-      ]
-    },
-    {
-      "name": "连山多租户商业系统",
-      "role": "技术负责人",
-      "description": "基于 Frappe 从 0 到 1 构建多租户商业平台，覆盖业务端与运营端应用建设，支撑多租户运营、租户发布及商业化场景落地。",
-      "startDate": "2025-06",
-      "endDate": "至今",
-      "tech": [
-        "Frappe",
-        "Python",
-        "PostgreSQL",
-        "Redis"
-      ],
-      "highlights": [
-        "完成 Frappe 技术调研与选型，结合业务场景评估框架适配性，并主导后续平台架构落地。",
-        "针对原始框架能力不足的问题，设计多 App 管理方式并开发配套租户发布工具，补齐多租户场景下的工程交付能力。",
-        "总结并落地基于 Frappe 的开发规范与研发流程，形成团队长期沿用的开发协作方式，提升项目交付一致性与可维护性。",
-        "围绕出海需求完善国际化能力，补齐框架现有 i18n 支持方案，支撑多语言业务场景落地。",
-        "平台已在真实业务场景中投入使用，当前支持多个租户接入，服务业务端与运营端实际使用。",
-        "承担任务分配、项目推进、技术选型与核心模块兜底，协同团队完成业务端与运营端应用交付。"
-      ]
+      "link": "https://github.com/username/project"
     }
   ],
   "education": [
     {
-      "school": "重庆邮电大学",
-      "degree": "本科",
-      "major": "应用物理学",
-      "startDate": "2013-09",
-      "endDate": "2018-03"
+      "school": "University Name",
+      "degree": "Bachelor's/Master's",
+      "major": "Major",
+      "startDate": "2016-09",
+      "endDate": "2020-06",
+      "gpa": "3.8/4.0"
     }
   ],
   "skills": {
