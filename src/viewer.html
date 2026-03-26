@@ -11,8 +11,11 @@
   <style>
     /* ── Sidebar layout ── */
     @media screen {
-      /* Push resume content left so sidebar doesn't overlap */
-      body { padding-right: var(--sidebar-width) !important; }
+      /* Dark canvas — overrides theme's light bg so sidebar and content share the same ground */
+      body {
+        padding-right: var(--sidebar-width) !important;
+        background: var(--bg) !important;
+      }
     }
 
     .viewer-sidebar {
@@ -21,8 +24,8 @@
       right: 0;
       width: var(--sidebar-width);
       height: 100vh;
-      background: var(--card);
-      border-left: 1px solid var(--border);
+      background: var(--bg);
+      border-left: 1px solid rgba(255, 255, 255, 0.04);
       display: flex;
       flex-direction: column;
       padding: 24px 18px;
