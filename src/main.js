@@ -3,17 +3,11 @@
  * Loads resume data and theme dynamically based on URL parameters
  */
 
-// Parse URL parameters
 const params = new URLSearchParams(window.location.search);
-const lang = params.get('lang') || 'zh';
+let lang = params.get('lang') || 'zh';
 const themeId = params.get('theme') || 'consultant-polished';
-const version = params.get('version') || 'default';
+let version = params.get('version') || 'default';
 
-/**
- * Load CSS file dynamically
- * @param {string} href - CSS file path
- * @param {string} media - Media query (optional)
- */
 function loadCSS(href, media = 'all') {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
@@ -26,11 +20,6 @@ function loadCSS(href, media = 'all') {
   });
 }
 
-/**
- * Load resume data from JSON file
- * @param {string} language - Language code (zh/en)
- * @param {string} ver - Version ID (default or custom)
- */
 async function loadData(language, ver) {
   const filename = ver === 'default'
     ? `resume.${language}.json`
@@ -47,10 +36,6 @@ async function loadData(language, ver) {
   }
 }
 
-/**
- * Load theme template module
- * @param {string} theme - Theme ID
- */
 async function loadTheme(theme) {
   try {
     const module = await import(`./themes/${theme}/template.js`);
@@ -61,15 +46,50 @@ async function loadTheme(theme) {
   }
 }
 
-/**
- * Main initialization function
- */
+let cachedRender = null;
+let cachedVersions = [];
+
+function applyRender(data, newLang, newVersion) {
+  const resumeEl = document.getElementById('resume');
+  resumeEl.innerHTML = cachedRender(data, newLang);
+  document.documentElement.lang = newLang === 'zh' ? 'zh-CN' : 'en';
+
+  const name = data.personalInfo?.name || '';
+  const versionEntry = cachedVersions.find(v => v.id === newVersion);
+  const versionLabel = versionEntry ? versionEntry.label : newVersion;
+  const langLabel = newLang === 'zh' ? '中文' : 'English';
+  document.title = [name, versionLabel, langLabel].filter(Boolean).join('-');
+}
+
+async function rerenderResume(newLang, newVersion) {
+  const resumeEl = document.getElementById('resume');
+  resumeEl.style.opacity = '0';
+
+  try {
+    const data = await loadData(newLang, newVersion);
+    applyRender(data, newLang, newVersion);
+
+    lang = newLang;
+    version = newVersion;
+
+    const newParams = new URLSearchParams(window.location.search);
+    newParams.set('lang', newLang);
+    newParams.set('version', newVersion);
+    history.replaceState(null, '', '?' + newParams.toString());
+  } catch (error) {
+    console.error('Rerender failed:', error);
+  }
+
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    resumeEl.style.opacity = '1';
+  }));
+}
+
 async function init() {
   const loadingEl = document.getElementById('loading');
   const resumeEl = document.getElementById('resume');
 
   try {
-    // Load theme CSS files, resume data, and versions metadata in parallel
     const [, , data, versionsData] = await Promise.all([
       loadCSS(`/themes/${themeId}/screen.css`),
       loadCSS(`/themes/${themeId}/print.css`, 'print'),
@@ -77,26 +97,16 @@ async function init() {
       fetch('/data/versions.json').then(r => r.json()).catch(() => ({ versions: [] }))
     ]);
 
-    // Load theme template
+    cachedVersions = versionsData.versions || [];
     const render = await loadTheme(themeId);
+    cachedRender = render;
 
-    // Render resume
-    resumeEl.innerHTML = render(data, lang);
+    applyRender(data, lang, version);
 
-    // Update page title: name | versionLabel | langLabel
-    const name = data.personalInfo?.name || '';
-    const versionEntry = versionsData.versions.find(v => v.id === version);
-    const versionLabel = versionEntry ? versionEntry.label : version;
-    const langLabel = lang === 'zh' ? '中文' : 'English';
-    document.title = [name, versionLabel, langLabel].filter(Boolean).join('-');
+    if (loadingEl) loadingEl.style.display = 'none';
 
-    // Hide loading indicator
-    if (loadingEl) {
-      loadingEl.style.display = 'none';
-    }
-
-    // Update page language attribute
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    // Expose for viewer.html controls to call without page reload
+    window._liveryRerender = rerenderResume;
 
   } catch (error) {
     console.error('Initialization failed:', error);
@@ -109,11 +119,8 @@ async function init() {
         </p>
       </div>
     `;
-    if (loadingEl) {
-      loadingEl.style.display = 'none';
-    }
+    if (loadingEl) loadingEl.style.display = 'none';
   }
 }
 
-// Start initialization when DOM is ready
 init();

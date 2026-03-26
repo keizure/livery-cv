@@ -112,6 +112,10 @@
       }
     }
 
+    #resume {
+      transition: opacity 0.22s ease;
+    }
+
     .version-divider {
       height: 1px;
       background: #e0e0e0;
@@ -149,17 +153,18 @@
 
   <script>
     function toggleLanguage() {
-      const params = new URLSearchParams(window.location.search);
-      const currentLang = params.get('lang') || 'zh';
+      const currentLang = new URLSearchParams(window.location.search).get('lang') || 'zh';
       const newLang = currentLang === 'zh' ? 'en' : 'zh';
-      params.set('lang', newLang);
-      window.location.search = params.toString();
+      const toggle = document.getElementById('lang-toggle');
+      toggle.classList.remove('zh', 'en');
+      toggle.classList.add(newLang);
+      const currentVersion = new URLSearchParams(window.location.search).get('version') || 'default';
+      window._liveryRerender?.(newLang, currentVersion);
     }
 
     function switchVersion(newVersion) {
-      const params = new URLSearchParams(window.location.search);
-      params.set('version', newVersion);
-      window.location.search = params.toString();
+      const currentLang = new URLSearchParams(window.location.search).get('lang') || 'zh';
+      window._liveryRerender?.(currentLang, newVersion);
     }
 
     // Set switch state based on current language
