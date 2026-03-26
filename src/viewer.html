@@ -168,6 +168,13 @@
     const currentVersion = params.get('version') || 'default';
     document.getElementById('lang-toggle').classList.add(currentLang);
 
+    if (params.get('embed') === '1') {
+      document.querySelector('.lang-switcher').style.display = 'none';
+      const s = document.createElement('style');
+      s.textContent = 'body { padding: 20px !important; }';
+      document.head.appendChild(s);
+    }
+
     // Load and render version switcher
     fetch('/data/versions.json')
       .then(r => r.json())
