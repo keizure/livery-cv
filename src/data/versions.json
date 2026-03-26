@@ -1,0 +1,12 @@
+{
+  "versions": [
+    {
+      "id": "default",
+      "label": "默认版"
+    },
+    {
+      "id": "agent",
+      "label": "AI公司版"
+    }
+  ]
+}

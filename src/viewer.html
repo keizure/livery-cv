@@ -111,15 +111,37 @@
         display: none !important;
       }
     }
+
+    .version-divider {
+      height: 1px;
+      background: #e0e0e0;
+      margin: 4px 0;
+    }
+
+    .version-select {
+      width: 70px;
+      border: none;
+      outline: none;
+      font-size: 11px;
+      font-weight: 500;
+      color: #0B1F3A;
+      background: transparent;
+      cursor: pointer;
+      padding: 2px 0;
+    }
   </style>
 </head>
 <body>
-  <!-- Language Switcher -->
+  <!-- Language + Version Switcher -->
   <div class="lang-switcher">
     <button id="lang-toggle" class="lang-switch" onclick="toggleLanguage()">
       <span class="lang-switch-label zh">中</span>
       <span class="lang-switch-label en">EN</span>
     </button>
+    <div id="version-row" style="display:none">
+      <div class="version-divider"></div>
+      <select id="version-select" class="version-select" onchange="switchVersion(this.value)"></select>
+    </div>
   </div>
 
   <div id="loading" class="loading">加载中...</div>
@@ -134,10 +156,35 @@
       window.location.search = params.toString();
     }
 
+    function switchVersion(newVersion) {
+      const params = new URLSearchParams(window.location.search);
+      params.set('version', newVersion);
+      window.location.search = params.toString();
+    }
+
     // Set switch state based on current language
     const params = new URLSearchParams(window.location.search);
     const currentLang = params.get('lang') || 'zh';
+    const currentVersion = params.get('version') || 'default';
     document.getElementById('lang-toggle').classList.add(currentLang);
+
+    // Load and render version switcher
+    fetch('/data/versions.json')
+      .then(r => r.json())
+      .then(data => {
+        const versions = data.versions;
+        if (versions.length <= 1) return;
+        const select = document.getElementById('version-select');
+        versions.forEach(v => {
+          const opt = document.createElement('option');
+          opt.value = v.id;
+          opt.textContent = v.label;
+          if (v.id === currentVersion) opt.selected = true;
+          select.appendChild(opt);
+        });
+        document.getElementById('version-row').style.display = 'block';
+      })
+      .catch(() => { /* silently ignore if versions.json missing */ });
   </script>
 
   <script type="module" src="/main.js"></script>

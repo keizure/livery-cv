@@ -7,6 +7,7 @@
 const params = new URLSearchParams(window.location.search);
 const lang = params.get('lang') || 'zh';
 const themeId = params.get('theme') || 'consultant-polished';
+const version = params.get('version') || 'default';
 
 /**
  * Load CSS file dynamically
@@ -28,10 +29,14 @@ function loadCSS(href, media = 'all') {
 /**
  * Load resume data from JSON file
  * @param {string} language - Language code (zh/en)
+ * @param {string} ver - Version ID (default or custom)
  */
-async function loadData(language) {
+async function loadData(language, ver) {
+  const filename = ver === 'default'
+    ? `resume.${language}.json`
+    : `resume.${language}.${ver}.json`;
   try {
-    const response = await fetch(`/data/resume.${language}.json`);
+    const response = await fetch(`/data/${filename}`);
     if (!response.ok) {
       throw new Error(`Failed to load resume data: ${response.status}`);
     }
@@ -64,20 +69,26 @@ async function init() {
   const resumeEl = document.getElementById('resume');
 
   try {
-    // Load theme CSS files
-    await Promise.all([
+    // Load theme CSS files, resume data, and versions metadata in parallel
+    const [, , data, versionsData] = await Promise.all([
       loadCSS(`/themes/${themeId}/screen.css`),
-      loadCSS(`/themes/${themeId}/print.css`, 'print')
+      loadCSS(`/themes/${themeId}/print.css`, 'print'),
+      loadData(lang, version),
+      fetch('/data/versions.json').then(r => r.json()).catch(() => ({ versions: [] }))
     ]);
-
-    // Load resume data
-    const data = await loadData(lang);
 
     // Load theme template
     const render = await loadTheme(themeId);
 
     // Render resume
     resumeEl.innerHTML = render(data, lang);
+
+    // Update page title: name | versionLabel | langLabel
+    const name = data.personalInfo?.name || '';
+    const versionEntry = versionsData.versions.find(v => v.id === version);
+    const versionLabel = versionEntry ? versionEntry.label : version;
+    const langLabel = lang === 'zh' ? '中文' : 'English';
+    document.title = [name, versionLabel, langLabel].filter(Boolean).join('-');
 
     // Hide loading indicator
     if (loadingEl) {
@@ -94,7 +105,7 @@ async function init() {
         <h2>加载失败 / Loading Failed</h2>
         <p style="margin-top: 16px; color: #666;">${error.message}</p>
         <p style="margin-top: 8px; font-size: 14px; color: #999;">
-          请检查 URL 参数: lang=${lang}, theme=${themeId}
+          请检查 URL 参数: lang=${lang}, theme=${themeId}, version=${version}
         </p>
       </div>
     `;

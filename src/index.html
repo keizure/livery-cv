@@ -42,7 +42,7 @@
       display: flex;
       justify-content: center;
       gap: 16px;
-      margin-bottom: 48px;
+      margin-bottom: 24px;
     }
 
     .language-btn {
@@ -66,6 +66,37 @@
     .language-btn.active {
       background: white;
       color: #667eea;
+    }
+
+    .version-selector {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .version-btn {
+      padding: 8px 24px;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .version-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .version-btn.active {
+      background: white;
+      color: #764ba2;
+      border-color: white;
     }
 
     .themes-grid {
@@ -169,11 +200,14 @@
       <button class="language-btn" data-lang="en">English</button>
     </div>
 
+    <div id="version-selector" class="version-selector" style="display:none"></div>
+
     <div id="themes-container" class="loading">加载主题中...</div>
   </div>
 
   <script type="module">
     let currentLang = 'zh';
+    let currentVersion = 'default';
 
     // Load themes metadata
     async function loadThemes() {
@@ -190,6 +224,49 @@
       }
     }
 
+    // Load versions metadata
+    async function loadVersions() {
+      try {
+        const response = await fetch('/data/versions.json');
+        if (!response.ok) return [{ id: 'default', label: '默认版' }];
+        const data = await response.json();
+        return data.versions;
+      } catch {
+        return [{ id: 'default', label: '默认版' }];
+      }
+    }
+
+    // Render version selector
+    function renderVersionSelector(versions) {
+      const container = document.getElementById('version-selector');
+      if (versions.length <= 1) {
+        container.style.display = 'none';
+        return;
+      }
+      container.innerHTML = versions.map(v => `
+        <button class="version-btn${v.id === currentVersion ? ' active' : ''}" data-version="${v.id}">${v.label}</button>
+      `).join('');
+      container.style.display = 'flex';
+
+      container.querySelectorAll('.version-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          container.querySelectorAll('.version-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          currentVersion = this.dataset.version;
+          updateViewLinks();
+        });
+      });
+    }
+
+    function updateViewLinks() {
+      document.querySelectorAll('.view-btn').forEach(link => {
+        const url = new URL(link.href);
+        url.searchParams.set('lang', currentLang);
+        url.searchParams.set('version', currentVersion);
+        link.href = url.toString();
+      });
+    }
+
     // Render theme cards
     function renderThemes(themes) {
       const container = document.getElementById('themes-container');
@@ -204,7 +281,7 @@
               <div class="theme-info">
                 <h3 class="theme-name">${theme.name}</h3>
                 <p class="theme-description">${theme.description}</p>
-                <a href="viewer.html?lang=${currentLang}&theme=${theme.id}"
+                <a href="viewer.html?lang=${currentLang}&theme=${theme.id}&version=${currentVersion}"
                    class="view-btn"
                    onclick="event.stopPropagation()">
                   查看简历
@@ -218,32 +295,24 @@
 
     // Open theme in viewer
     window.openTheme = function(themeId) {
-      window.location.href = `viewer.html?lang=${currentLang}&theme=${themeId}`;
+      window.location.href = `viewer.html?lang=${currentLang}&theme=${themeId}&version=${currentVersion}`;
     };
 
     // Language selector
     document.querySelectorAll('.language-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        // Update active state
         document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
-
-        // Update current language
         currentLang = this.dataset.lang;
-
-        // Update all view buttons
-        document.querySelectorAll('.view-btn').forEach(link => {
-          const url = new URL(link.href);
-          url.searchParams.set('lang', currentLang);
-          link.href = url.toString();
-        });
+        updateViewLinks();
       });
     });
 
     // Initialize
     async function init() {
       try {
-        const themes = await loadThemes();
+        const [themes, versions] = await Promise.all([loadThemes(), loadVersions()]);
+        renderVersionSelector(versions);
         renderThemes(themes);
       } catch (error) {
         const container = document.getElementById('themes-container');
