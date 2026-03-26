@@ -4,199 +4,201 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>简历</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared.css">
   <style>
-    /* Basic loading styles */
-    body {
-      margin: 0;
-      padding: 0;
+    /* ── Sidebar layout ── */
+    @media screen {
+      /* Push resume content left so sidebar doesn't overlap */
+      body { padding-right: var(--sidebar-width) !important; }
     }
+
+    .viewer-sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--card);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 18px;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    /* Brand in sidebar — inherits .brand / .brand-cv from shared.css */
+    .sidebar-brand {
+      font-size: 22px;
+      margin-bottom: 28px;
+      opacity: 0.9;
+      transition: opacity 0.18s;
+    }
+    .sidebar-brand:hover { opacity: 1; }
+
+    /* Sidebar sections */
+    .sidebar-section {
+      margin-bottom: 20px;
+    }
+
+    .sidebar-label {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .sidebar-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* Sidebar rule between sections */
+    .sidebar-rule {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 4px 0 20px;
+    }
+
+    /* Spacer pushes footer to bottom */
+    .sidebar-spacer { flex: 1; }
+
+    /* Print button */
+    .sidebar-print-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      width: 100%;
+      padding: 8px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--muted);
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: border-color 0.18s, color 0.18s;
+    }
+    .sidebar-print-btn:hover {
+      border-color: var(--accent-dim);
+      color: var(--accent);
+    }
+    .sidebar-print-btn svg {
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    /* Resume fade transition */
+    #resume { transition: opacity 0.22s ease; }
+
+    /* Loading state */
     .loading {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      font-family: system-ui, -apple-system, sans-serif;
-      color: #666;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
     }
 
-    /* Language switcher - screen only */
-    .lang-switcher {
-      position: fixed;
-      top: 20px;
-      right: -56px;
-      z-index: 1000;
-      background: white;
-      padding: 6px;
-      border-radius: 20px 0 0 20px;
-      box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.1);
-      transition: right 0.3s ease;
-    }
-
-    .lang-switcher:hover {
-      right: 0;
-    }
-
-    .lang-switch {
-      position: relative;
-      width: 70px;
-      height: 32px;
-      background: #e0e0e0;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: background 0.3s;
-      border: none;
-      padding: 0;
-      display: flex;
-      align-items: center;
-    }
-
-    .lang-switch::before {
-      content: '';
-      position: absolute;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: white;
-      top: 2px;
-      left: 2px;
-      transition: transform 0.3s;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    .lang-switch.en::before {
-      transform: translateX(38px);
-    }
-
-    .lang-switch-label {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 11px;
-      font-weight: 500;
-      color: #666;
-      pointer-events: none;
-      transition: opacity 0.3s;
-      line-height: 1;
-    }
-
-    .lang-switch-label.zh {
-      left: 9px;
-    }
-
-    .lang-switch-label.en {
-      right: 6px;
-    }
-
-    .lang-switch.zh .lang-switch-label.zh {
-      opacity: 1;
-      color: #0B1F3A;
-    }
-
-    .lang-switch.zh .lang-switch-label.en {
-      opacity: 0.3;
-    }
-
-    .lang-switch.en .lang-switch-label.zh {
-      opacity: 0.3;
-    }
-
-    .lang-switch.en .lang-switch-label.en {
-      opacity: 1;
-      color: #0B1F3A;
-    }
-
-    /* Hide switcher when printing */
+    /* Print: hide sidebar, restore body padding */
     @media print {
-      .lang-switcher {
-        display: none !important;
-      }
-    }
-
-    #resume {
-      transition: opacity 0.22s ease;
-    }
-
-    .version-divider {
-      height: 1px;
-      background: #e0e0e0;
-      margin: 4px 0;
-    }
-
-    .version-select {
-      width: 70px;
-      border: none;
-      outline: none;
-      font-size: 11px;
-      font-weight: 500;
-      color: #0B1F3A;
-      background: transparent;
-      cursor: pointer;
-      padding: 2px 0;
+      .viewer-sidebar { display: none !important; }
+      body { padding-right: 0 !important; }
     }
   </style>
 </head>
 <body>
-  <!-- Language + Version Switcher -->
-  <div class="lang-switcher">
-    <button id="lang-toggle" class="lang-switch" onclick="toggleLanguage()">
-      <span class="lang-switch-label zh">中</span>
-      <span class="lang-switch-label en">EN</span>
-    </button>
-    <div id="version-row" style="display:none">
-      <div class="version-divider"></div>
-      <select id="version-select" class="version-select" onchange="switchVersion(this.value)"></select>
-    </div>
-  </div>
+  <!-- Sidebar toolbar -->
+  <aside class="viewer-sidebar" id="viewer-sidebar">
+    <a href="/" class="brand sidebar-brand">Livery<span class="brand-cv">CV</span></a>
 
-  <div id="loading" class="loading">加载中...</div>
+    <div class="sidebar-rule"></div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">语言</p>
+      <div class="sidebar-group">
+        <button class="lang-btn" id="btn-zh" onclick="switchLang('zh')">中文</button>
+        <button class="lang-btn" id="btn-en" onclick="switchLang('en')">English</button>
+      </div>
+    </div>
+
+    <div class="sidebar-section" id="sidebar-version-section" style="display:none">
+      <p class="sidebar-label">版本</p>
+      <div class="sidebar-group" id="sidebar-version-btns"></div>
+    </div>
+
+    <div class="sidebar-spacer"></div>
+
+    <button class="sidebar-print-btn" onclick="window.print()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+        <rect x="6" y="14" width="12" height="8"/>
+      </svg>
+      打印 / 导出 PDF
+    </button>
+  </aside>
+
+  <div id="loading" class="loading">加载中…</div>
   <div class="container" id="resume"></div>
 
   <script>
-    function toggleLanguage() {
-      const currentLang = new URLSearchParams(window.location.search).get('lang') || 'zh';
-      const newLang = currentLang === 'zh' ? 'en' : 'zh';
-      const toggle = document.getElementById('lang-toggle');
-      toggle.classList.remove('zh', 'en');
-      toggle.classList.add(newLang);
-      const currentVersion = new URLSearchParams(window.location.search).get('version') || 'default';
-      window._liveryRerender?.(newLang, currentVersion);
+    const params = new URLSearchParams(window.location.search);
+    const initLang = params.get('lang') || 'zh';
+    const initVersion = params.get('version') || 'default';
+
+    // Set initial active state for language buttons
+    document.getElementById('btn-' + initLang)?.classList.add('active');
+
+    function switchLang(newLang) {
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('btn-' + newLang)?.classList.add('active');
+      const ver = new URLSearchParams(window.location.search).get('version') || 'default';
+      window._liveryRerender?.(newLang, ver);
     }
 
     function switchVersion(newVersion) {
-      const currentLang = new URLSearchParams(window.location.search).get('lang') || 'zh';
-      window._liveryRerender?.(currentLang, newVersion);
+      document.querySelectorAll('.version-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.version-btn[data-version="${newVersion}"]`)?.classList.add('active');
+      const lang = new URLSearchParams(window.location.search).get('lang') || 'zh';
+      window._liveryRerender?.(lang, newVersion);
     }
 
-    // Set switch state based on current language
-    const params = new URLSearchParams(window.location.search);
-    const currentLang = params.get('lang') || 'zh';
-    const currentVersion = params.get('version') || 'default';
-    document.getElementById('lang-toggle').classList.add(currentLang);
-
+    // Embed mode: hide sidebar, equalise body padding
     if (params.get('embed') === '1') {
-      document.querySelector('.lang-switcher').style.display = 'none';
+      document.getElementById('viewer-sidebar').style.display = 'none';
       const s = document.createElement('style');
       s.textContent = 'body { padding: 20px !important; }';
       document.head.appendChild(s);
     }
 
-    // Load and render version switcher
+    // Load versions and populate sidebar
     fetch('/data/versions.json')
       .then(r => r.json())
       .then(data => {
         const versions = data.versions;
         if (versions.length <= 1) return;
-        const select = document.getElementById('version-select');
+        const section = document.getElementById('sidebar-version-section');
+        const group = document.getElementById('sidebar-version-btns');
         versions.forEach(v => {
-          const opt = document.createElement('option');
-          opt.value = v.id;
-          opt.textContent = v.label;
-          if (v.id === currentVersion) opt.selected = true;
-          select.appendChild(opt);
+          const btn = document.createElement('button');
+          btn.className = 'version-btn' + (v.id === initVersion ? ' active' : '');
+          btn.dataset.version = v.id;
+          btn.textContent = v.label;
+          btn.onclick = () => switchVersion(v.id);
+          group.appendChild(btn);
         });
-        document.getElementById('version-row').style.display = 'block';
+        section.style.display = 'block';
       })
-      .catch(() => { /* silently ignore if versions.json missing */ });
+      .catch(() => {});
   </script>
 
   <script type="module" src="/main.js"></script>

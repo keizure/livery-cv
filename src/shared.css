@@ -1,0 +1,105 @@
+/**
+ * Livery CV — Shared Design System
+ * Imported by index.html and viewer.html.
+ * Do NOT import theme-specific or page-layout rules here.
+ */
+
+/* ── Design tokens ── */
+:root {
+  --bg: #0d0d10;
+  --card: #141417;
+  --border: rgba(255, 255, 255, 0.07);
+  --accent: #c9a87e;
+  --accent-dim: rgba(201, 168, 126, 0.22);
+  --text: #eeeef2;
+  --muted: rgba(238, 238, 242, 0.4);
+  --sidebar-width: 192px;
+}
+
+/* ── Reset ── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Base ── */
+body {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* ── Grain texture overlay ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Animation ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Brand typography ── */
+.brand {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.1em;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.brand-cv {
+  font-family: 'Outfit', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 0.19em;
+  letter-spacing: 0.32em;
+  color: var(--accent);
+  margin-top: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ── Pill buttons ── */
+.lang-btn,
+.version-btn {
+  padding: 5px 17px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s, background 0.18s;
+}
+
+.lang-btn:hover,
+.version-btn:hover {
+  border-color: var(--accent-dim);
+  color: var(--accent);
+}
+
+.lang-btn.active,
+.version-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0d0d10;
+  font-weight: 500;
+}
+
+/* ── Divider ── */
+.ctrl-sep {
+  width: 1px;
+  height: 16px;
+  background: var(--border);
+  margin: 0 4px;
+}
