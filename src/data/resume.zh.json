@@ -1,58 +1,116 @@
 {
   "personalInfo": {
     "name": "梁锦润",
-    "title": "软件工程师",
-    "email": "example@email.com",
-    "phone": "138-xxxx-xxxx",
-    "location": "中国·深圳",
+    "title": "全栈工程师",
+    "email": "leungjinrun@gmail.com",
+    "phone": "15091587159",
+    "location": "中国·北京",
     "links": {
-      "github": "https://github.com/username"
+      "github": "https://github.com/keizure"
     }
   },
   "summary": "这里填写个人简介，3-5 句话概括你的核心技能和优势。",
   "experience": [
     {
-      "company": "公司名称",
-      "position": "职位",
-      "location": "城市",
-      "startDate": "2020-01",
+      "company": "北京车和家汽车科技有限公司",
+      "position": "全栈工程师",
+      "location": "北京",
+      "startDate": "2023-04",
       "endDate": "至今",
-      "description": "在这个职位上的工作描述，简要说明主要职责和工作内容。",
+      "description": "负责内部数据平台及【连山】商业平台的技术方案设计、核心功能开发与项目交付推进，协调前后端研发协作并对阶段性交付结果负责。",
       "highlights": [
-        "负责核心产品的架构设计和开发",
-        "带领团队完成 XX 项目，提升性能 50%",
-        "优化系统架构，降低成本 30%"
+        "主导内部数据平台重构，基于 Vue3 + Django 重建前后端架构，落地 RBAC 细粒度权限模型，提升系统可维护性、权限管理能力和后续业务扩展效率。",
+        "从 0 到 1 建设 iPush 消息推送平台，完成消息模板、发送链路及业务接入能力设计，自持熔断、限流、限频功能，支撑部门多个重要业务场景，日均发送量达 3 万+。",
+        "基于 Frappe 从 0 到 1 搭建【连山】多租户系统，完成业务端与运营端应用建设，支撑多租户运营与商业化流程闭环。"
+      ]
+    },
+    {
+      "company": "阿里巴巴｜⾼德地图",
+      "position": "前端工程师",
+      "location": "北京",
+      "startDate": "2021-11",
+      "endDate": "2023-03",
+      "description": "参与高德打车业务的跨端开发与迭代，基于类 React Native 框架负责支付、问题反馈等核心模块的开发与维护。",
+      "highlights": [
+        "参与高德打车核心业务链路迭代，负责支付、反馈等模块开发，保障需求稳定交付与线上体验。",
+        "推动团队代码规范建设，完善开发文档体系并搭建文档网站，提升团队协作效率与知识沉淀质量。"
+      ]
+    },
+    {
+      "company": "北京猿力未来科技有限公司",
+      "position": "前端工程师",
+      "location": "北京",
+      "startDate": "2020-01",
+      "endDate": "2021-10",
+      "description": "参与数据库管理平台 DBPaaS 的建设与迭代，负责核心功能开发及前后端协同落地。",
+      "highlights": [
+        "主导搭建 DBPaaS 平台核心模块，基于 Vue3 + Django 完成前后端开发，支撑数据库管理与运维场景。",
+        "推动代码规范统一和 CI/CD 流程落地，减少人工发布和环境差异带来的问题，提升交付稳定性。"
+      ]
+    },
+    {
+      "company": "北京⼤米科技有限公司",
+      "position": "前端工程师",
+      "location": "北京",
+      "startDate": "2018-05",
+      "endDate": "2019-11",
+      "description": "基于 Vue2 与 WebView 混合开发模式，参与 VIPKid 用户侧业务功能迭代与页面重构。",
+      "highlights": [
+        "参与用户端遗留业务重构，基于 Vue2 优化老平台前端实现，提升页面可维护性与迭代效率。",
+        "优化项目工程化工具链与开发流程，降低重复性操作成本，提升团队开发效率。"
       ]
     }
   ],
-  "education": [
-    {
-      "school": "大学名称",
-      "degree": "本科/硕士",
-      "major": "专业",
-      "startDate": "2016-09",
-      "endDate": "2020-06",
-      "gpa": "3.8/4.0"
-    }
-  ],
-  "skills": {
-    "languages": ["JavaScript", "TypeScript", "Python", "Go"],
-    "frameworks": ["React", "Vue", "Node.js", "Express"],
-    "tools": ["Git", "Docker", "Kubernetes", "AWS"],
-    "databases": ["MySQL", "PostgreSQL", "MongoDB", "Redis"]
-  },
   "projects": [
     {
       "name": "项目名称",
       "description": "项目简短描述",
       "startDate": "2023-01",
       "endDate": "2023-12",
-      "tech": ["React", "Node.js", "MongoDB"],
+      "tech": [
+        "React",
+        "Node.js",
+        "MongoDB"
+      ],
       "highlights": [
         "实现了 XX 功能，用户量达到 10w+",
         "优化性能，响应时间减少 60%"
       ],
       "link": "https://github.com/username/project"
     }
-  ]
+  ],
+  "education": [
+    {
+      "school": "重庆邮电大学",
+      "degree": "本科",
+      "major": "应用物理学",
+      "startDate": "2013-09",
+      "endDate": "2018-03"
+    }
+  ],
+  "skills": {
+    "languages": [
+      "JavaScript",
+      "TypeScript",
+      "Python"
+    ],
+    "frameworks": [
+      "React",
+      "Vue",
+      "Node.js",
+      "FastAPI",
+      "Django"
+    ],
+    "tools": [
+      "Docker",
+      "Vim",
+      "Nginx",
+      "Tmux"
+    ],
+    "databases": [
+      "MySQL",
+      "PostgreSQL",
+      "Redis"
+    ]
+  }
 }
