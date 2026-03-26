@@ -78,11 +78,7 @@
     font-size: 10pt;
   }
 
-  /* 分页控制 */
-  .section {
-    page-break-inside: avoid;
-  }
-
+  /* 分页控制：只在 item 级别避免断页，section 级别不限制 */
   .experience-item,
   .project-item,
   .education-item {

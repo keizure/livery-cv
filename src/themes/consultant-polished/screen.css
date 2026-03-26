@@ -101,7 +101,6 @@ html[lang="zh-CN"] .skill-content {
 /* 章节 */
 .section {
   margin-bottom: 40px;
-  page-break-inside: avoid;
 }
 
 .section-title {
