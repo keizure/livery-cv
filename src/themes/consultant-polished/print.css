@@ -2,7 +2,7 @@
 
 @page {
   size: A4;
-  margin: 0;
+  margin: 15mm 12mm;
 }
 
 @media print {
@@ -14,10 +14,9 @@
 
   .container {
     max-width: 100%;
-    width: 210mm;
-    min-height: 297mm;
+    width: 100%;
     margin: 0;
-    padding: 15mm 12mm;
+    padding: 0;
     box-shadow: none;
   }
 
@@ -78,11 +77,11 @@
     font-size: 10pt;
   }
 
-  /* 分页控制：只在 item 级别避免断页，section 级别不限制 */
+  /* 分页控制：不强制保持整块不断页，避免大片空白 */
   .experience-item,
   .project-item,
   .education-item {
-    page-break-inside: avoid;
+    page-break-inside: auto;
   }
 
   /* 确保链接在打印时可见 */
