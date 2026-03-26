@@ -28,4 +28,4 @@
 
 ## Configuration & Data Notes
 - Resume JSON must follow the shared schema used by themes; keep required fields such as `experience[].description` and `projects[].startDate`.
-- For sharing specific views, use URL params like `viewer.html?lang=zh&theme=consultant-polished`.
+- For sharing specific views, use URL params like `viewer.html?lang=zh&theme=consultant-polished&version=default`.
