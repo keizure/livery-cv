@@ -83,6 +83,8 @@
       border-radius: 7px;
       color: rgba(238, 238, 242, 0.65);
       font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.05em;
       cursor: pointer;
       transition: border-color 0.18s, color 0.18s;
       text-align: left;
@@ -94,23 +96,6 @@
     .sidebar-export-btn svg {
       flex-shrink: 0;
       opacity: 0.7;
-    }
-    .export-btn-text {
-      display: flex;
-      flex-direction: row;
-      align-items: baseline;
-      gap: 6px;
-    }
-    .export-btn-label {
-      font-size: 12px;
-      letter-spacing: 0.05em;
-      line-height: 1;
-    }
-    .export-btn-pages {
-      font-size: 10px;
-      color: rgba(238, 238, 242, 0.38);
-      letter-spacing: 0.04em;
-      line-height: 1;
     }
 
     /* Resume fade transition */
@@ -161,10 +146,7 @@
         <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
         <rect x="6" y="14" width="12" height="8"/>
       </svg>
-      <span class="export-btn-text">
-        <span class="export-btn-label">导出 PDF</span>
-        <span class="export-btn-pages" id="page-count">计算中…</span>
-      </span>
+      <span id="export-label">导出 PDF</span>
     </button>
   </aside>
 
@@ -201,15 +183,32 @@
       document.head.appendChild(s);
     }
 
-    // Estimate PDF page count after each render
-    // A4 content height: (297 - 15*2) mm × (96px/25.4mm) ≈ 1009px
-    const A4_CONTENT_PX = Math.round((297 - 30) / 25.4 * 96);
+    // Estimate PDF page count after each render.
+    //
+    // Two sources of error in a naïve scrollHeight / A4_height calculation:
+    //   1. Screen CSS adds padding to the container (e.g. 48px top + 48px bottom)
+    //      that is stripped to 0 in print CSS → subtract computed paddingTop/Bottom.
+    //   2. Browser default font is 16px; print CSS sets body to 11pt ≈ 14.67px.
+    //      Screen content is ~9% taller than its print equivalent → multiply by
+    //      (printFontPx / screenFontPx) to normalise to print height.
+    //
+    // A4 @page margin: 15mm top + 15mm bottom → content height = 267mm = ~1009px.
+    const A4_CONTENT_PX = Math.round((297 - 30) / 25.4 * 96); // 1009
+    const PRINT_FONT_PX  = 11 * 96 / 72;                       // 11pt → ~14.67px
+
     function updatePageCount() {
       const resumeEl = document.getElementById('resume');
-      const el = document.getElementById('page-count');
+      const el = document.getElementById('export-label');
       if (!resumeEl || !el) return;
-      const pages = Math.max(1, Math.ceil(resumeEl.scrollHeight / A4_CONTENT_PX));
-      el.textContent = `≈ ${pages} 页 A4`;
+
+      const cs = getComputedStyle(resumeEl);
+      const paddingV = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+      const screenFontPx = parseFloat(getComputedStyle(document.body).fontSize);
+      const fontRatio = PRINT_FONT_PX / screenFontPx;
+
+      const printHeight = (resumeEl.scrollHeight - paddingV) * fontRatio;
+      const pages = Math.max(1, Math.ceil(printHeight / A4_CONTENT_PX));
+      el.textContent = `导出 PDF (${pages}页)`;
     }
     window._liveryOnRender = updatePageCount;
 
