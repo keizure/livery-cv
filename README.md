@@ -1,161 +1,81 @@
 # Livery CV
 
-> A bilingual (EN/ZH) CV builder that transforms your data into polished templates—with skills and media (links/images) automation built in.
+> A bilingual (EN/ZH) resume builder that renders your JSON data into polished print-ready themes.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## ✨ Features
 
-- 🎨 **Multiple Themes** - Same content, different visual styles
-- 🌍 **Bilingual Support** - Seamless EN/ZH switching with localized labels
-- 🔄 **Content-Style Separation** - JSON data completely decoupled from themes
-- 📱 **Live Preview** - Hot module replacement for instant feedback
-- 📄 **PDF Export** - Print to perfect A4-sized PDFs via browser
-- 🎚️ **Smart Switcher** - Sliding language toggle (hidden in print)
+- 🎨 **Multiple Themes** — same content, different visual styles with live previews
+- 🌍 **Bilingual** — seamless EN/ZH switching with localized labels
+- 🗂️ **Multi-version** — maintain distinct resume variants (e.g. general, AI-company) from one data set
+- 🔄 **Content/style separation** — JSON data is fully decoupled from themes
+- 📄 **PDF export** — one-click A4 export with accurate page-count estimate
 
 ## 🚀 Quick Start
 
-### 1. Install Dependencies
-
 ```bash
 npm install
-```
-
-### 2. Start Dev Server
-
-```bash
 npm run dev
 ```
 
-The browser will open at `http://localhost:5173` with the theme selector.
+Open `http://localhost:5173` to reach the theme selector.
 
-### 3. Choose Language & Theme
+## 📖 Usage
 
-- Click **中文** or **English** at the top to switch languages
-- Select a theme card and click **查看简历** / **View Resume**
+### 1. Select language and version
 
-### 4. Edit Your Data
+On the theme selector page, use the top bar to switch between **中文 / English** and, if multiple versions are defined, select the desired resume version (e.g. 默认版 / AI公司版).
 
-Update the appropriate language file:
-- Chinese: `src/data/resume.zh.json`
-- English: `src/data/resume.en.json`
+### 2. Preview and open a theme
 
-The page auto-refreshes on save thanks to Vite HMR.
+Each theme card shows a live scaled preview. Click a card or its **查看简历 / View Resume** button to open the full-page resume viewer.
 
-### 5. Export PDF
+In the viewer, use the left sidebar to:
+- Switch language or version on the fly
+- Click **导出 PDF (N页)** to print to PDF
 
-On the resume preview page:
-1. Press `Cmd+P` (Mac) or `Ctrl+P` (Windows)
-2. Select **"Save as PDF"**
-3. Settings:
-   - Paper size: **A4**
-   - Margins: **None**
-   - Background graphics: **Enabled**
-4. Save to local
+### 3. Export to PDF
 
-## 📁 Project Structure
+Click the **导出 PDF** button in the viewer sidebar, or press `Cmd+P` (Mac) / `Ctrl+P` (Windows), then:
 
-```
-livery-cv/
-├── src/
-│   ├── index.html              # Theme selector homepage
-│   ├── viewer.html             # Resume viewer with lang switcher
-│   ├── main.js                 # Core loading logic
-│   │
-│   ├── data/                   # Resume data (multi-language)
-│   │   ├── resume.zh.json      # Chinese resume
-│   │   └── resume.en.json      # English resume
-│   │
-│   └── themes/                 # Theme directory
-│       ├── themes.json         # Theme metadata
-│       │
-│       └── consultant-polished/ # Theme implementation
-│           ├── template.js     # HTML structure renderer
-│           ├── screen.css      # Screen display styles
-│           └── print.css       # PDF print styles
-│
-├── vite.config.js
-└── package.json
+| Setting | Value |
+|---|---|
+| Paper size | A4 |
+| Margins | None |
+| Background graphics | Enabled |
+
+### 4. Edit your resume data
+
+Update the relevant file in `src/data/`:
+
+| Language | File |
+|---|---|
+| Chinese | `src/data/resume.zh.json` |
+| English | `src/data/resume.en.json` |
+
+### 5. Create a new resume version
+
+```bash
+npm run cv:new
 ```
 
-## 🎨 Adding New Themes
+This interactive command will prompt you for:
+- **Version ID** — ASCII slug used in filenames and URLs (e.g. `internet`)
+- **Display label** — shown in the version selector (e.g. `互联网版`)
+- **Base version** — which existing version to copy from
 
-1. Create a new directory in `src/themes/`, e.g., `modern-minimal/`
-2. Add three required files:
-   - `template.js` - Export a `render(data, lang)` function
-   - `screen.css` - Styles for browser display
-   - `print.css` - Styles for PDF export
-3. Register in `src/themes/themes.json`:
+It then creates `resume.zh.<id>.json` and `resume.en.<id>.json` in `src/data/`, and registers the new version in `versions.json`. Edit the generated files to tailor that variant.
 
-```json
-{
-  "themes": [
-    {
-      "id": "modern-minimal",
-      "name": "Modern Minimal",
-      "description": "Clean, tech-industry friendly design",
-      "preview": "/previews/modern-minimal.png"
-    }
-  ]
-}
-```
-
-The system will auto-detect and display the new theme.
-
-## 🌍 Adding New Languages
-
-1. Create a new data file in `src/data/`, e.g., `resume.ja.json` (Japanese)
-2. Add language labels to theme's `template.js`:
-
-```javascript
-const labels = {
-  zh: { summary: '个人简介', ... },
-  en: { summary: 'Profile', ... },
-  ja: { summary: '要約', ... }  // New language
-};
-```
-
-3. Update `src/index.html` to add a language switcher button
-
-## 🛠 Tech Stack
-
-- **Vite** - Lightning-fast dev server with HMR
-- **Vanilla JavaScript** - Zero framework dependencies
-- **CSS Print Media** - Native browser printing with A4 precision
-- **ES Modules** - Modern modular architecture with dynamic imports
-
-## 📐 Design Philosophy
-
-### 1. Content-Style Separation
-- Resume data (JSON) and themes (HTML/CSS) are completely decoupled
-- Updating content automatically reflects across all themes
-- Modifying themes never affects data integrity
-
-### 2. Theme Independence
-- Each theme is a self-contained module
-- Themes don't interfere with each other
-- Easy to develop, test, and maintain
-
-### 3. Language Localization
-- UI labels switch automatically based on language
-- Supports language-specific formatting rules (e.g., Chinese `•` vs English `,`)
-
-## 🎯 URL Parameters
-
-Control the viewer via URL parameters:
+When only one version is defined, the version selector is hidden. You can also link directly to a specific view:
 
 ```
-http://localhost:5173/viewer.html?lang=zh&theme=consultant-polished
+viewer.html?lang=zh&theme=consultant-polished&version=agent
 ```
 
-- `lang` - Language code (`zh` / `en`)
-- `theme` - Theme ID (see `themes.json`)
+## 📝 Data Format
 
-Perfect for sharing specific language/theme combinations.
-
-## 📝 Data File Format
-
-Resume data follows a unified JSON structure (same field names for all languages):
+All language files share the same field schema:
 
 ```json
 {
@@ -183,43 +103,40 @@ Resume data follows a unified JSON structure (same field names for all languages
 }
 ```
 
-## 🔮 Roadmap
+## 🎨 Adding a New Theme
 
-- [x] Phase 1: Multi-theme architecture refactor
-- [x] Phase 2: Bilingual support (EN/ZH)
-- [x] Phase 3: Theme selector UI with sliding language switcher
-- [ ] Phase 4: Batch PDF export via Puppeteer
-- [ ] Phase 5: Additional themes (Modern Minimal, Classic, etc.)
-- [ ] Phase 6: Online theme editor
+1. Create a folder under `src/themes/`, e.g. `src/themes/modern-minimal/`
+2. Add three required files:
+   - `template.js` — exports a `render(data, lang)` function that returns an HTML string
+   - `screen.css` — styles for browser display
+   - `print.css` — styles for PDF export
+3. Register the theme in `src/themes/themes.json`:
 
-## 🎨 Inspiration
+```json
+{
+  "themes": [
+    {
+      "id": "modern-minimal",
+      "name": "Modern Minimal",
+      "description": "Clean, tech-industry friendly design",
+      "preview": "/previews/modern-minimal.png"
+    }
+  ]
+}
+```
 
-### English Resume Themes
-- [Consultant Polished](https://registry.jsonresume.org/thomasdavis?theme=consultant-polished)
-- [Minimalist Grid](https://registry.jsonresume.org/thomasdavis?theme=minimalist-grid)
+The theme selector picks it up automatically on the next page load.
 
-### Chinese Resume References
-- Open for suggestions!
+## 🚢 Deployment
+
+Build and deploy the static output:
+
+```bash
+npm run build   # outputs to dist/
+```
+
+Deploy the `dist/` folder to any static host: Vercel, Netlify, GitHub Pages, Cloudflare Pages, etc.
 
 ## 📄 License
 
-MIT License
-
-## 🤝 Contributing
-
-Issues and Pull Requests are welcome!
-
-## 🚀 Deployment
-
-This project uses pure web technologies with no backend required. Deploy the `dist/` directory to any static hosting service:
-
-- **Vercel** - Zero-config deployment
-- **Netlify** - Instant builds with continuous deployment
-- **GitHub Pages** - Free hosting for public repos
-- **Cloudflare Pages** - Fast global CDN
-
-Simply run `npm run build` and deploy the generated `dist/` folder.
-
----
-
-**Made with ❤️ for job seekers who value design and efficiency**
+MIT
