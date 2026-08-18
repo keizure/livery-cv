@@ -2,11 +2,11 @@
   "versions": [
     {
       "id": "default",
-      "label": "默认版"
+      "label": "前端全栈"
     },
     {
       "id": "agent",
-      "label": "AI公司版"
+      "label": "AI全栈"
     }
   ]
 }
