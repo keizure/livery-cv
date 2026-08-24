@@ -1,7 +1,7 @@
 /* Consultant Polished 风格 - 严格遵循原版 */
 :root {
-  --primary-color: #0B1F3A;
-  --text-color: #1A1A1A;
+  --primary-color: #0b1f3a;
+  --text-color: #1a1a1a;
   --text-secondary: #666666;
   --text-body: #333333;
   --text-bullet: #444444;
@@ -18,7 +18,9 @@
 }
 
 body {
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-family:
+    -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   font-size: 16px;
   line-height: 1.6;
   color: var(--text-color);
@@ -44,7 +46,7 @@ html[lang="zh-CN"] .skill-content {
   max-width: 800px;
   margin: 0 auto;
   background: var(--bg-color);
-  padding: 48px 32px;
+  padding: 48px 32px 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
